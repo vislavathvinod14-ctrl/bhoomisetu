@@ -1,1 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>BhoomiSetu Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f7f4;
+    color:#1d3928;
+}
+
+header{
+    background:#1f5130;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.logo img{
+    width:48px;
+    height:48px;
+    object-fit:contain;
+    background:white;
+    border-radius:8px;
+}
+
+.logout{
+    background:white;
+    color:#1f5130;
+    border:0;
+    padding:10px 16px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.login-box{
+    max-width:420px;
+    margin:70px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.1);
+}
+
+.login-box h2{
+    text-align:center;
+    margin-top:0;
+    color:#28683c;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin:8px 0 15px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    cursor:pointer;
+}
+
+.login-btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:8px;
+    background:#397b48;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.error{
+    color:#b00020;
+    margin-top:12px;
+    text-align:center;
+}
+
+.dashboard{
+    display:none;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.07);
+}
+
+.stat h3{
+    margin:0 0 8px;
+    font-size:15px;
+    color:#666;
+}
+
+.stat strong{
+    font-size:28px;
+    color:#28683c;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    gap:10px;
+}
+
+.refresh{
+    background:#28683c;
+    color:white;
+    border:0;
+    padding:10px 16px;
+    border-radius:8px;
+}
+
+.property{
+    background:white;
+    margin-bottom:18px;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.property-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.property h2{
+    margin:0 0 8px;
+    color:#28683c;
+}
+
+.badge{
+    padding:7px 12px;
+    border-radius:20px;
+    background:#fff2c2;
+    color:#795d00;
+    font-weight:bold;
+    height:max-content;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+
+.detail{
+    background:#f5f8f5;
+    padding:10px;
+    border-radius:7px;
+}
+
+.media{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.media img{
+    width:150px;
+    height:100px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+.actions button,
+.actions a{
+    border:0;
+    padding:10px 14px;
+    border-radius:7px;
+    text-decoration:none;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.approve{
+    background:#287a3d;
+    color:white;
+}
+
+.reject{
+    background:#c62828;
+    color:white;
+}
+
+.sold{
+    background:#795548;
+    color:white;
+}
+
+.maps{
+    background:#e7f0e8;
+    color:#28683c;
+}
+
+.call{
+    background:#e8f4ff;
+    color:#1769aa;
+}
+
+.whatsapp{
+    background:#e6f7ea;
+    color:#16833a;
+}
+
+.empty{
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+}
+
+@media(max-width:800px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+    header{
+        padding:12px;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    .logo img{
+        width:40px;
+        height:40px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+
+    .media img{
+        width:100%;
+        height:180px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header id="adminHeader" style="display:none;">
+    <div class="logo">
+        <img src="Logo.PNG" alt="BhoomiSetu">
+        <span>BhoomiSetu Admin</span>
+    </div>
+
+    <button class="logout" onclick="logout()">
+        Logout
+    </button>
+</header>
+
+<!-- LOGIN -->
+
+<div id="loginSection" class="login-box">
+
+    <h2>🔐 Admin Login</h2>
+
+    <p style="text-align:center;color:#666;">
+        BhoomiSetu Property Management
+    </p>
+
+    <label>Email</label>
+
+    <input
+        type="email"
+        id="email"
+        value="bhoomisetu14@gmail.com"
+        placeholder="Admin email"
+    >
+
+    <label>Password</label>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+    >
+
+    <button class="login-btn" onclick="login()">
+        Login to Dashboard
+    </button>
+
+    <div id="loginError" class="error"></div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="dashboard">
+
+<div class="container">
+
+    <div class="stats">
+
+        <div class="stat">
+            <h3>Total Properties</h3>
+            <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <h3>Pending</h3>
+            <strong id="pendingCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <h3>Approved</h3>
+            <strong id="approvedCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <h3>Sold</h3>
+            <strong id="soldCount">0</strong>
+        </div>
+
+    </div>
+
+    <div class="topbar">
+
+        <h2>Property Submissions</h2>
+
+        <button class="refresh" onclick="loadProperties()">
+            🔄 Refresh
+        </button>
+
+    </div>
+
+    <div id="propertyList">
+        <div class="loading">
+            Loading properties...
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://vaqzzxkfcawasufavmxn.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_F-vFp9fHz3_MbD3lz2oYTQ_-Ah28nsX";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const ADMIN_EMAIL =
+"bhoomisetu14@gmail.com";
+
+
+async function login(){
+
+    const email =
+    document.getElementById("email").value.trim();
+
+    const password =
+    document.getElementById("password").value;
+
+    const errorBox =
+    document.getElementById("loginError");
+
+    errorBox.textContent = "";
+
+    if(!email || !password){
+
+        errorBox.textContent =
+        "Please enter email and password.";
+
+        return;
+    }
+
+    const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+        email:email,
+        password:password
+    });
+
+    if(error){
+
+        errorBox.textContent =
+        error.message;
+
+        return;
+    }
+
+    if(data.user.email.toLowerCase() !==
+       ADMIN_EMAIL.toLowerCase()){
+
+        await supabaseClient.auth.signOut();
+
+        errorBox.textContent =
+        "You are not authorized as Admin.";
+
+        return;
+    }
+
+    showDashboard();
+
+}
+
+
+async function showDashboard(){
+
+    document.getElementById("loginSection")
+    .style.display="none";
+
+    document.getElementById("adminHeader")
+    .style.display="flex";
+
+    document.getElementById("dashboard")
+    .style.display="block";
+
+    await loadProperties();
+}
+
+
+async function loadProperties(){
+
+    const list =
+    document.getElementById("propertyList");
+
+    list.innerHTML =
+    '<div class="loading">Loading properties...</div>';
+
+    const {data,error} =
+    await supabaseClient
+    .from("properties")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+    if(error){
+
+        list.innerHTML =
+        `<div class="empty">
+            ❌ Failed to load properties<br><br>
+            ${escapeHtml(error.message)}
+        </div>`;
+
+        return;
+    }
+
+    const properties = data || [];
+
+    updateStats(properties);
+
+    if(properties.length === 0){
+
+        list.innerHTML =
+        `<div class="empty">
+            No property submissions found.
+        </div>`;
+
+        return;
+    }
+
+    list.innerHTML =
+    properties.map(propertyCard).join("");
+
+}
+
+
+function updateStats(properties){
+
+    document.getElementById("totalCount")
+    .textContent=properties.length;
+
+    document.getElementById("pendingCount")
+    .textContent=
+    properties.filter(p =>
+    (p.status || "").toLowerCase()==="pending"
+    ).length;
+
+    document.getElementById("approvedCount")
+    .textContent=
+    properties.filter(p =>
+    (p.status || "").toLowerCase()==="approved"
+    ).length;
+
+    document.getElementById("soldCount")
+    .textContent=
+    properties.filter(p =>
+    (p.status || "").toLowerCase()==="sold"
+    ).length;
+}
+
+
+function propertyCard(p){
+
+    let photos = [];
+
+    if(Array.isArray(p.photo_urls)){
+        photos=p.photo_urls;
+    }
+
+    let mediaHtml="";
+
+    if(photos.length){
+
+        mediaHtml =
+        `<div class="media">
+        ${photos.map(url =>
+        `<img src="${escapeAttr(url)}"
+        alt="Property photo">`).join("")}
+        </div>`;
+    }
+
+    let videoHtml="";
+
+    if(p.video_url){
+
+        videoHtml =
+        `<div style="margin-top:12px;">
+        🎥 <a href="${escapeAttr(p.video_url)}"
+        target="_blank">
+        View Property Video
+        </a>
+        </div>`;
+    }
+
+    const status =
+    (p.status || "pending").toLowerCase();
+
+    return `
+
+    <div class="property">
+
+        <div class="property-header">
+
+            <div>
+                <h2>
+                    Property #${p.id}
+                </h2>
+
+                <div>
+                    ${escapeHtml(
+                    p.property_type || "Property"
+                    )}
+                </div>
+            </div>
+
+            <div class="badge">
+                ${escapeHtml(status.toUpperCase())}
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="detail">
+                👤 <b>Seller:</b>
+                ${escapeHtml(p.seller_name || "-")}
+            </div>
+
+            <div class="detail">
+                📞 <b>Mobile:</b>
+                ${escapeHtml(p.mobile || "-")}
+            </div>
+
+            <div class="detail">
+                💬 <b>WhatsApp:</b>
+                ${escapeHtml(p.whatsapp || "-")}
+            </div>
+
+            <div class="detail">
+                👔 <b>Seller Type:</b>
+                ${escapeHtml(p.seller_type || "-")}
+            </div>
+
+            <div class="detail">
+                📍 <b>District:</b>
+                ${escapeHtml(p.district || "-")}
+            </div>
+
+            <div class="detail">
+                🏘️ <b>Mandal:</b>
+                ${escapeHtml(p.mandal || "-")}
+            </div>
+
+            <div class="detail">
+                🏡 <b>Village:</b>
+                ${escapeHtml(p.village || "-")}
+            </div>
+
+            <div class="detail">
+                📐 <b>Land Size:</b>
+                ${escapeHtml(p.land_size || "-")}
+            </div>
+
+            <div class="detail">
+                💰 <b>Expected Price:</b>
+                ${escapeHtml(p.expected_price || "-")}
+            </div>
+
+            <div class="detail">
+                🛣️ <b>Road Access:</b>
+                ${escapeHtml(p.road_access || "-")}
+            </div>
+
+        </div>
+
+
+        ${
+            p.description
+            ?
+            `<div style="margin-top:15px;">
+                <b>Description:</b><br>
+                ${escapeHtml(p.description)}
+            </div>`
+            :""
+        }
+
+
+        ${mediaHtml}
+
+        ${videoHtml}
+
+
+        <div class="actions">
+
+            ${
+                p.google_maps
+                ?
+                `<a class="maps"
+                href="${escapeAttr(p.google_maps)}"
+                target="_blank">
+                📍 Google Maps
+                </a>`
+                :""
+            }
+
+            ${
+                p.mobile
+                ?
+                `<a class="call"
+                href="tel:${escapeAttr(p.mobile)}">
+                📞 Call Seller
+                </a>`
+                :""
+            }
+
+            ${
+                p.whatsapp
+                ?
+                `<a class="whatsapp"
+                href="https://wa.me/91${cleanPhone(p.whatsapp)}"
+                target="_blank">
+                💬 WhatsApp
+                </a>`
+                :""
+            }
+
+            <button class="approve"
+            onclick="changeStatus(${p.id},'approved')">
+            ✅ Approve
+            </button>
+
+            <button class="reject"
+            onclick="changeStatus(${p.id},'rejected')">
+            ❌ Reject
+            </button>
+
+            <button class="sold"
+            onclick="changeStatus(${p.id},'sold')">
+            🏷️ Mark Sold
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+}
+
+
+async function changeStatus(id,status){
+
+    const confirmed =
+    confirm(
+    "Change property #" + id +
+    " status to " + status + "?"
+    );
+
+    if(!confirmed) return;
+
+    const {error} =
+    await supabaseClient
+    .from("properties")
+    .update({status:status})
+    .eq("id",id);
+
+    if(error){
+
+        alert(
+        "Update failed: " +
+        error.message
+        );
+
+        return;
+    }
+
+    alert(
+    "Property status updated successfully."
+    );
+
+    await loadProperties();
+}
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("adminHeader")
+    .style.display="none";
+
+    document.getElementById("dashboard")
+    .style.display="none";
+
+    document.getElementById("loginSection")
+    .style.display="block";
+
+    document.getElementById("password")
+    .value="";
+
+}
+
+
+function cleanPhone(phone){
+
+    return String(phone)
+    .replace(/\D/g,"")
+    .replace(/^91/,"");
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHtml(value);
+
+}
+
+
+// Check existing session
+
+(async function(){
+
+    const {data} =
+    await supabaseClient.auth.getSession();
+
+    if(data.session &&
+       data.session.user &&
+       data.session.user.email.toLowerCase() ===
+       ADMIN_EMAIL.toLowerCase()){
+
+        showDashboard();
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
