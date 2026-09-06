@@ -15,7 +15,7 @@
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#f4f7f4;
     color:#1d3928;
 }
@@ -152,6 +152,8 @@ button{
     border-radius:8px;
 }
 
+/* PROPERTY */
+
 .property{
     background:white;
     margin-bottom:18px;
@@ -255,6 +257,120 @@ button{
     color:#16833a;
 }
 
+/* BUYER ENQUIRIES */
+
+.enquiries-section{
+    margin-top:40px;
+}
+
+.enquiries-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.enquiries-header h2{
+    margin:0;
+    color:#28683c;
+}
+
+.enquiry-count{
+    color:#666;
+    font-weight:bold;
+}
+
+.enquiry{
+    background:white;
+    margin-bottom:15px;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.enquiry-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.enquiry-header h3{
+    margin:0;
+    color:#28683c;
+}
+
+.new-badge{
+    background:#e8f5e9;
+    color:#287a3d;
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.enquiry-details{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+
+.enquiry-detail{
+    background:#f5f8f5;
+    padding:11px;
+    border-radius:7px;
+}
+
+.enquiry-message{
+    margin-top:12px;
+    padding:14px;
+    background:#fff8e5;
+    border-left:4px solid #d4a72c;
+    border-radius:7px;
+}
+
+.enquiry-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.enquiry-actions a,
+.enquiry-actions button{
+    padding:10px 14px;
+    border-radius:7px;
+    text-decoration:none;
+    border:0;
+    font-weight:bold;
+}
+
+.buyer-call{
+    background:#e8f4ff;
+    color:#1769aa;
+}
+
+.buyer-whatsapp{
+    background:#e6f7ea;
+    color:#16833a;
+}
+
+.mark-contacted{
+    background:#28683c;
+    color:white;
+}
+
+.no-enquiries{
+    background:white;
+    padding:35px;
+    text-align:center;
+    border-radius:12px;
+    color:#666;
+}
+
 .empty{
     background:white;
     padding:40px;
@@ -268,16 +384,19 @@ button{
 }
 
 @media(max-width:800px){
+
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .details{
+    .details,
+    .enquiry-details{
         grid-template-columns:1fr;
     }
 }
 
 @media(max-width:500px){
+
     header{
         padding:12px;
     }
@@ -314,6 +433,7 @@ button{
 <body>
 
 <header id="adminHeader" style="display:none;">
+
     <div class="logo">
         <img src="Logo.PNG" alt="BhoomiSetu">
         <span>BhoomiSetu Admin</span>
@@ -322,7 +442,9 @@ button{
     <button class="logout" onclick="logout()">
         Logout
     </button>
+
 </header>
+
 
 <!-- LOGIN -->
 
@@ -366,6 +488,9 @@ button{
 
 <div class="container">
 
+
+    <!-- PROPERTY STATS -->
+
     <div class="stats">
 
         <div class="stat">
@@ -390,6 +515,9 @@ button{
 
     </div>
 
+
+    <!-- PROPERTY SUBMISSIONS -->
+
     <div class="topbar">
 
         <h2>Property Submissions</h2>
@@ -401,10 +529,45 @@ button{
     </div>
 
     <div id="propertyList">
+
         <div class="loading">
             Loading properties...
         </div>
+
     </div>
+
+
+    <!-- BUYER ENQUIRIES -->
+
+    <div class="enquiries-section">
+
+        <div class="enquiries-header">
+
+            <h2>📩 Buyer Enquiries</h2>
+
+            <div class="enquiry-count" id="enquiryCount">
+                0 Enquiries
+            </div>
+
+            <button
+                class="refresh"
+                onclick="loadBuyerEnquiries()"
+            >
+                🔄 Refresh Enquiries
+            </button>
+
+        </div>
+
+        <div id="enquiryList">
+
+            <div class="loading">
+                Loading buyer enquiries...
+            </div>
+
+        </div>
+
+    </div>
+
 
 </div>
 
@@ -429,6 +592,8 @@ const ADMIN_EMAIL =
 "bhoomisetu14@gmail.com";
 
 
+/* LOGIN */
+
 async function login(){
 
     const email =
@@ -452,8 +617,11 @@ async function login(){
 
     const {data,error} =
     await supabaseClient.auth.signInWithPassword({
+
         email:email,
+
         password:password
+
     });
 
     if(error){
@@ -464,8 +632,11 @@ async function login(){
         return;
     }
 
-    if(data.user.email.toLowerCase() !==
-       ADMIN_EMAIL.toLowerCase()){
+    if(
+        !data.user.email ||
+        data.user.email.toLowerCase() !==
+        ADMIN_EMAIL.toLowerCase()
+    ){
 
         await supabaseClient.auth.signOut();
 
@@ -480,6 +651,8 @@ async function login(){
 }
 
 
+/* SHOW DASHBOARD */
+
 async function showDashboard(){
 
     document.getElementById("loginSection")
@@ -492,8 +665,13 @@ async function showDashboard(){
     .style.display="block";
 
     await loadProperties();
+
+    await loadBuyerEnquiries();
+
 }
 
+
+/* LOAD PROPERTIES */
 
 async function loadProperties(){
 
@@ -540,6 +718,8 @@ async function loadProperties(){
 }
 
 
+/* PROPERTY STATS */
+
 function updateStats(properties){
 
     document.getElementById("totalCount")
@@ -565,12 +745,16 @@ function updateStats(properties){
 }
 
 
+/* PROPERTY CARD */
+
 function propertyCard(p){
 
     let photos = [];
 
     if(Array.isArray(p.photo_urls)){
+
         photos=p.photo_urls;
+
     }
 
     let mediaHtml="";
@@ -579,9 +763,16 @@ function propertyCard(p){
 
         mediaHtml =
         `<div class="media">
+
         ${photos.map(url =>
-        `<img src="${escapeAttr(url)}"
-        alt="Property photo">`).join("")}
+
+        `<img
+            src="${escapeAttr(url)}"
+            alt="Property photo"
+        >`
+
+        ).join("")}
+
         </div>`;
     }
 
@@ -591,10 +782,16 @@ function propertyCard(p){
 
         videoHtml =
         `<div style="margin-top:12px;">
-        🎥 <a href="${escapeAttr(p.video_url)}"
-        target="_blank">
+
+        🎥
+
+        <a
+            href="${escapeAttr(p.video_url)}"
+            target="_blank"
+        >
         View Property Video
         </a>
+
         </div>`;
     }
 
@@ -608,6 +805,7 @@ function propertyCard(p){
         <div class="property-header">
 
             <div>
+
                 <h2>
                     Property #${p.id}
                 </h2>
@@ -617,10 +815,15 @@ function propertyCard(p){
                     p.property_type || "Property"
                     )}
                 </div>
+
             </div>
 
             <div class="badge">
-                ${escapeHtml(status.toUpperCase())}
+
+                ${escapeHtml(
+                status.toUpperCase()
+                )}
+
             </div>
 
         </div>
@@ -685,8 +888,11 @@ function propertyCard(p){
             p.description
             ?
             `<div style="margin-top:15px;">
+
                 <b>Description:</b><br>
+
                 ${escapeHtml(p.description)}
+
             </div>`
             :""
         }
@@ -702,10 +908,12 @@ function propertyCard(p){
             ${
                 p.google_maps
                 ?
-                `<a class="maps"
-                href="${escapeAttr(p.google_maps)}"
-                target="_blank">
-                📍 Google Maps
+                `<a
+                    class="maps"
+                    href="${escapeAttr(p.google_maps)}"
+                    target="_blank"
+                >
+                    📍 Google Maps
                 </a>`
                 :""
             }
@@ -713,9 +921,11 @@ function propertyCard(p){
             ${
                 p.mobile
                 ?
-                `<a class="call"
-                href="tel:${escapeAttr(p.mobile)}">
-                📞 Call Seller
+                `<a
+                    class="call"
+                    href="tel:${escapeAttr(p.mobile)}"
+                >
+                    📞 Call Seller
                 </a>`
                 :""
             }
@@ -723,27 +933,35 @@ function propertyCard(p){
             ${
                 p.whatsapp
                 ?
-                `<a class="whatsapp"
-                href="https://wa.me/91${cleanPhone(p.whatsapp)}"
-                target="_blank">
-                💬 WhatsApp
+                `<a
+                    class="whatsapp"
+                    href="https://wa.me/91${cleanPhone(p.whatsapp)}"
+                    target="_blank"
+                >
+                    💬 WhatsApp
                 </a>`
                 :""
             }
 
-            <button class="approve"
-            onclick="changeStatus(${p.id},'approved')">
-            ✅ Approve
+            <button
+                class="approve"
+                onclick="changeStatus(${p.id},'approved')"
+            >
+                ✅ Approve
             </button>
 
-            <button class="reject"
-            onclick="changeStatus(${p.id},'rejected')">
-            ❌ Reject
+            <button
+                class="reject"
+                onclick="changeStatus(${p.id},'rejected')"
+            >
+                ❌ Reject
             </button>
 
-            <button class="sold"
-            onclick="changeStatus(${p.id},'sold')">
-            🏷️ Mark Sold
+            <button
+                class="sold"
+                onclick="changeStatus(${p.id},'sold')"
+            >
+                🏷️ Mark Sold
             </button>
 
         </div>
@@ -754,12 +972,17 @@ function propertyCard(p){
 }
 
 
+/* CHANGE PROPERTY STATUS */
+
 async function changeStatus(id,status){
 
     const confirmed =
     confirm(
-    "Change property #" + id +
-    " status to " + status + "?"
+        "Change property #" +
+        id +
+        " status to " +
+        status +
+        "?"
     );
 
     if(!confirmed) return;
@@ -767,26 +990,285 @@ async function changeStatus(id,status){
     const {error} =
     await supabaseClient
     .from("properties")
-    .update({status:status})
+    .update({
+        status:status
+    })
     .eq("id",id);
 
     if(error){
 
         alert(
-        "Update failed: " +
-        error.message
+            "Update failed: " +
+            error.message
         );
 
         return;
     }
 
     alert(
-    "Property status updated successfully."
+        "Property status updated successfully."
     );
 
     await loadProperties();
+
 }
 
+
+/* LOAD BUYER ENQUIRIES */
+
+async function loadBuyerEnquiries(){
+
+    const list =
+    document.getElementById("enquiryList");
+
+    list.innerHTML =
+    '<div class="loading">Loading buyer enquiries...</div>';
+
+    const {data,error} =
+    await supabaseClient
+    .from("buyer_enquiries")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+
+    if(error){
+
+        list.innerHTML =
+        `<div class="empty">
+
+            ❌ Failed to load buyer enquiries
+
+            <br><br>
+
+            ${escapeHtml(error.message)}
+
+        </div>`;
+
+        return;
+    }
+
+
+    const enquiries =
+    data || [];
+
+
+    document.getElementById("enquiryCount")
+    .textContent =
+    enquiries.length + " Enquiries";
+
+
+    if(enquiries.length === 0){
+
+        list.innerHTML =
+        `<div class="no-enquiries">
+
+            📩 No buyer enquiries yet.
+
+        </div>`;
+
+        return;
+    }
+
+
+    list.innerHTML =
+    enquiries
+    .map(buyerEnquiryCard)
+    .join("");
+
+}
+
+
+/* BUYER ENQUIRY CARD */
+
+function buyerEnquiryCard(e){
+
+    const status =
+    (e.status || "new").toLowerCase();
+
+
+    const date =
+    e.created_at
+    ?
+    new Date(e.created_at)
+    .toLocaleString("en-IN")
+    :
+    "-";
+
+
+    const phone =
+    cleanPhone(e.mobile || "");
+
+
+    const whatsapp =
+    cleanPhone(
+        e.whatsapp ||
+        e.mobile ||
+        ""
+    );
+
+
+    return `
+
+    <div class="enquiry">
+
+        <div class="enquiry-header">
+
+            <h3>
+                👤 ${escapeHtml(
+                    e.buyer_name || "Buyer"
+                )}
+            </h3>
+
+            <div class="new-badge">
+
+                ${escapeHtml(
+                    status.toUpperCase()
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="enquiry-details">
+
+            <div class="enquiry-detail">
+
+                🆔 <b>Property ID:</b>
+
+                ${escapeHtml(
+                    e.property_id || "-"
+                )}
+
+            </div>
+
+
+            <div class="enquiry-detail">
+
+                📞 <b>Mobile:</b>
+
+                ${escapeHtml(
+                    e.mobile || "-"
+                )}
+
+            </div>
+
+
+            <div class="enquiry-detail">
+
+                💬 <b>WhatsApp:</b>
+
+                ${escapeHtml(
+                    e.whatsapp || "-"
+                )}
+
+            </div>
+
+
+            <div class="enquiry-detail">
+
+                🕐 <b>Date:</b>
+
+                ${escapeHtml(date)}
+
+            </div>
+
+        </div>
+
+
+        ${
+            e.message
+            ?
+            `<div class="enquiry-message">
+
+                📝 <b>Message:</b><br><br>
+
+                ${escapeHtml(e.message)}
+
+            </div>`
+            :
+            ""
+        }
+
+
+        <div class="enquiry-actions">
+
+
+            ${
+                phone
+                ?
+                `<a
+                    class="buyer-call"
+                    href="tel:${escapeAttr(phone)}"
+                >
+                    📞 Call Buyer
+                </a>`
+                :
+                ""
+            }
+
+
+            ${
+                whatsapp
+                ?
+                `<a
+                    class="buyer-whatsapp"
+                    href="https://wa.me/91${escapeAttr(whatsapp)}"
+                    target="_blank"
+                >
+                    💬 WhatsApp Buyer
+                </a>`
+                :
+                ""
+            }
+
+
+            <button
+                class="mark-contacted"
+                onclick="markEnquiryContacted(${e.id})"
+            >
+                ✅ Mark Contacted
+            </button>
+
+
+        </div>
+
+    </div>
+
+    `;
+}
+
+
+/* MARK BUYER ENQUIRY CONTACTED */
+
+async function markEnquiryContacted(id){
+
+    const {error} =
+    await supabaseClient
+    .from("buyer_enquiries")
+    .update({
+        status:"contacted"
+    })
+    .eq("id",id);
+
+
+    if(error){
+
+        alert(
+            "Unable to update enquiry: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await loadBuyerEnquiries();
+
+}
+
+
+/* LOGOUT */
 
 async function logout(){
 
@@ -807,6 +1289,8 @@ async function logout(){
 }
 
 
+/* PHONE */
+
 function cleanPhone(phone){
 
     return String(phone)
@@ -815,6 +1299,8 @@ function cleanPhone(phone){
 
 }
 
+
+/* HTML SECURITY */
 
 function escapeHtml(value){
 
@@ -835,19 +1321,24 @@ function escapeAttr(value){
 }
 
 
-// Check existing session
+/* CHECK EXISTING SESSION */
 
 (async function(){
 
     const {data} =
     await supabaseClient.auth.getSession();
 
-    if(data.session &&
-       data.session.user &&
-       data.session.user.email.toLowerCase() ===
-       ADMIN_EMAIL.toLowerCase()){
+
+    if(
+        data.session &&
+        data.session.user &&
+        data.session.user.email &&
+        data.session.user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+    ){
 
         showDashboard();
+
     }
 
 })();
