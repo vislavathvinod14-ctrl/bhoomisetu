@@ -1,548 +1,878 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-  <title>BhoomiSetu | Telangana Land & Property Marketplace</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-  <meta name="description"
-        content="Find land, plots, farm lands, houses, apartments and flats across Telangana with BhoomiSetu.">
+<title>BhoomiSetu | Telangana Land & Property Marketplace</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
 
-    body {
-      background: #f7f8f5;
-      color: #173b2a;
-    }
-
-    header {
-      background: white;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e5e5;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: 800;
-      color: #176b3a;
-    }
-
-    .logo span {
-      color: #c99a32;
-    }
-
-    nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #173b2a;
-      font-weight: 600;
-    }
-
-    .hero {
-      padding: 80px 6%;
-      text-align: center;
-      background: linear-gradient(135deg, #edf6ee, #fffaf0);
-    }
-
-    .hero h1 {
-      font-size: 44px;
-      margin-bottom: 15px;
-      color: #145c32;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #555;
-      margin-bottom: 30px;
-    }
-
-    .search-box {
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr) auto;
-      gap: 10px;
-    }
-
-    .search-box input,
-    .search-box select {
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    button {
-      border: none;
-      border-radius: 8px;
-      padding: 14px 22px;
-      background: #176b3a;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0e522b;
-    }
-
-    section {
-      padding: 60px 6%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .section-title h2 {
-      font-size: 32px;
-      color: #145c32;
-    }
-
-    .section-title p {
-      margin-top: 8px;
-      color: #666;
-    }
-
-    .categories,
-    .locations,
-    .properties {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .category-icon {
-      font-size: 35px;
-      margin-bottom: 15px;
-    }
-
-    .card h3 {
-      margin-bottom: 8px;
-      color: #176b3a;
-    }
-
-    .card p {
-      color: #666;
-      font-size: 14px;
-    }
-
-    .property-image {
-      height: 160px;
-      background: #dfe9df;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 45px;
-      margin-bottom: 15px;
-    }
-
-    .price {
-      color: #c08c20;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    .sell-section {
-      background: #176b3a;
-      color: white;
-      text-align: center;
-    }
-
-    .sell-section h2 {
-      font-size: 34px;
-      margin-bottom: 15px;
-    }
-
-    .sell-section p {
-      margin-bottom: 25px;
-    }
-
-    .gold-button {
-      background: #c99a32;
-    }
-
-    .how-it-works {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 15px;
-      text-align: center;
-    }
-
-    .step {
-      background: white;
-      padding: 20px 10px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-
-    .step-number {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 12px;
-      border-radius: 50%;
-      background: #176b3a;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    footer {
-      background: #10291d;
-      color: white;
-      padding: 40px 6%;
-      text-align: center;
-    }
-
-    footer p {
-      margin: 8px;
-      color: #cdd8d1;
-    }
-
-    @media (max-width: 900px) {
-      nav {
-        display: none;
-      }
-
-      .hero h1 {
-        font-size: 34px;
-      }
-
-      .search-box {
-        grid-template-columns: 1fr;
-      }
-
-      .categories,
-      .locations,
-      .properties {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .how-it-works {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      section {
-        padding: 45px 5%;
-      }
-
-      .categories,
-      .locations,
-      .properties,
-      .how-it-works {
-        grid-template-columns: 1fr;
-      }
-    }
-    .brand img {
-  width: 180px;
-  height: auto;
-  display: block;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
-  </style>
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f8f5;
+    color:#173b2a;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 6%;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.brand img{
+    width:170px;
+    height:auto;
+    display:block;
+}
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#174f2c;
+    font-weight:600;
+    font-size:15px;
+}
+
+nav a:hover{
+    color:#c89b28;
+}
+
+.header-btn{
+    background:#28753e;
+    color:white;
+    padding:11px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.header-btn:hover{
+    background:#1f6032;
+}
+
+/* HERO */
+
+.hero{
+    min-height:540px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:70px 20px;
+    background:
+        linear-gradient(
+            rgba(20,75,40,0.86),
+            rgba(20,75,40,0.86)
+        ),
+        url("Logo.PNG");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:900px;
+    color:white;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:18px;
+    line-height:1.15;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:30px;
+}
+
+.search-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    display:flex;
+    gap:10px;
+    max-width:900px;
+    margin:0 auto 25px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+}
+
+.search-box input,
+.search-box select{
+    flex:1;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.search-btn{
+    background:#c89b28;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.hero-btn{
+    display:inline-block;
+    padding:13px 23px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.btn-white{
+    background:white;
+    color:#246b39;
+}
+
+.btn-gold{
+    background:#c89b28;
+    color:white;
+}
+
+.btn-whatsapp{
+    background:#25D366;
+    color:white;
+}
+
+/* COMMON */
+
+section{
+    padding:65px 6%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    color:#286d3c;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.section-title p{
+    color:#666;
+}
+
+/* PROPERTY TYPES */
+
+.types{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.type-card{
+    background:white;
+    padding:30px 20px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.07);
+    transition:0.2s;
+}
+
+.type-card:hover{
+    transform:translateY(-4px);
+}
+
+.type-icon{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.type-card h3{
+    color:#276b3b;
+    margin-bottom:5px;
+}
+
+/* LOCATIONS */
+
+.locations{
+    background:#edf5ee;
+}
+
+.location-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.location-card{
+    background:white;
+    padding:18px;
+    border-radius:9px;
+    text-align:center;
+    font-weight:bold;
+    color:#286d3c;
+    box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+/* SELL */
+
+.sell-section{
+    background:#286f3d;
+    color:white;
+    text-align:center;
+}
+
+.sell-section h2{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.sell-section p{
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+.sell-btn{
+    display:inline-block;
+    background:#c89b28;
+    color:white;
+    padding:14px 30px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* HOW IT WORKS */
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.step{
+    text-align:center;
+    background:white;
+    padding:25px 15px;
+    border-radius:10px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.06);
+}
+
+.step-number{
+    width:45px;
+    height:45px;
+    background:#28753e;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+/* CONTACT */
+
+.contact-section{
+    background:white;
+}
+
+.contact-container{
+    max-width:1000px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.contact-card{
+    background:#f5f8f5;
+    padding:30px;
+    border-radius:12px;
+}
+
+.contact-card h3{
+    color:#286d3c;
+    margin-bottom:20px;
+    font-size:24px;
+}
+
+.contact-item{
+    margin-bottom:18px;
+}
+
+.contact-item strong{
+    display:block;
+    color:#173b2a;
+    margin-bottom:4px;
+}
+
+.contact-item a{
+    color:#286d3c;
+    text-decoration:none;
+}
+
+.map-btn{
+    display:inline-block;
+    background:#28753e;
+    color:white;
+    padding:12px 20px;
+    border-radius:7px;
+    text-decoration:none;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+    background:#173b2a;
+    color:white;
+    text-align:center;
+    padding:30px 20px;
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+}
+
+.footer-links{
+    margin:10px 0;
+}
+
+.footer-links a{
+    margin:0 10px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    header{
+        padding:12px 20px;
+    }
+
+    .brand img{
+        width:135px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .header-btn{
+        padding:9px 13px;
+        font-size:13px;
+    }
+
+    .hero{
+        min-height:620px;
+        padding:50px 18px;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:17px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-btn{
+        width:100%;
+    }
+
+    .types{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .location-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .contact-container{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    section{
+        padding:50px 18px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .types{
+        grid-template-columns:1fr;
+    }
+
+    .location-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="brand">
-    <img src="Logo.PNG" alt="BhoomiSetu Logo">
-  </div>
-  
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Buy</a>
-    <a href="#">Sell</a>
-    <a href="#">Locations</a>
-    <a href="#">Contact</a>
-  </nav>
+<!-- HEADER -->
 
-  <a href="list-property.html" class="list-btn">List Property</a>
+<header>
+
+    <a href="index.html" class="brand">
+        <img src="Logo.PNG" alt="BhoomiSetu Logo">
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#buy">Buy</a>
+        <a href="list-property.html">Sell</a>
+        <a href="#locations">Locations</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="list-property.html" class="header-btn">
+        List Property
+    </a>
+
 </header>
 
-<section class="hero">
 
-  <h1>Find the Right Land & Property in Telangana</h1>
+<!-- HERO -->
 
-  <p>
-    Land • Plots • Farm Land • Houses • Apartments • Flats
-  </p>
+<section class="hero" id="home">
 
-  <div class="search-box">
+    <div class="hero-content">
 
-    <input type="text" placeholder="Enter location">
+        <h1>
+            Find the Right Land & Property in Telangana
+        </h1>
 
-    <select>
-      <option>Property Type</option>
-      <option>Agricultural Land</option>
-      <option>Farm Land</option>
-      <option>Residential Plot</option>
-      <option>Commercial Land</option>
-      <option>House</option>
-      <option>Apartment</option>
-      <option>Flat</option>
-    </select>
+        <p>
+            Discover land, plots and properties with BhoomiSetu
+        </p>
 
-    <select>
-      <option>Budget</option>
-      <option>Under ₹10 Lakhs</option>
-      <option>₹10–25 Lakhs</option>
-      <option>₹25–50 Lakhs</option>
-      <option>₹50 Lakhs–₹1 Crore</option>
-      <option>₹1 Crore+</option>
-    </select>
+        <div class="search-box">
 
-    <input type="text" placeholder="Size">
+            <input
+                type="text"
+                id="locationSearch"
+                placeholder="Enter Location">
 
-    <button onclick="alert('Property search will be connected next!')">
-      Search
-    </button>
+            <select id="propertyType">
+                <option value="">Property Type</option>
+                <option>Agricultural Land</option>
+                <option>Residential Plot</option>
+                <option>Commercial Land</option>
+                <option>Farm Land</option>
+                <option>Development Land</option>
+            </select>
 
-  </div>
+            <input
+                type="text"
+                id="budgetSearch"
+                placeholder="Budget">
+
+            <button
+                class="search-btn"
+                onclick="searchProperty()">
+                Search
+            </button>
+
+        </div>
+
+        <div class="hero-buttons">
+
+            <a
+                href="#buy"
+                class="hero-btn btn-white">
+                Buy Land
+            </a>
+
+            <a
+                href="list-property.html"
+                class="hero-btn btn-gold">
+                Sell Property
+            </a>
+
+            <a
+                href="https://wa.me/919391569352?text=Hello%20BhoomiSetu%2C%20I%20am%20interested%20in%20a%20property."
+                target="_blank"
+                class="hero-btn btn-whatsapp">
+                WhatsApp
+            </a>
+
+        </div>
+
+    </div>
 
 </section>
 
-<section>
 
-  <div class="section-title">
-    <h2>Explore Properties</h2>
-    <p>Find the property that matches your needs.</p>
-  </div>
+<!-- PROPERTY TYPES -->
 
-  <div class="categories">
+<section id="buy">
 
-    <div class="card">
-      <div class="category-icon">🌾</div>
-      <h3>Agricultural Land</h3>
-      <p>Farmland and agricultural properties.</p>
+    <div class="section-title">
+
+        <h2>Explore Properties</h2>
+
+        <p>
+            Find the right property for your needs
+        </p>
+
     </div>
 
-    <div class="card">
-      <div class="category-icon">🌳</div>
-      <h3>Farm Land</h3>
-      <p>Farm land and farmhouse opportunities.</p>
-    </div>
+    <div class="types">
 
-    <div class="card">
-      <div class="category-icon">📐</div>
-      <h3>Residential Plots</h3>
-      <p>Plots for your dream home.</p>
-    </div>
+        <div class="type-card">
+            <div class="type-icon">🌾</div>
+            <h3>Agricultural Land</h3>
+            <p>Land for agriculture and investment</p>
+        </div>
 
-    <div class="card">
-      <div class="category-icon">🏢</div>
-      <h3>Commercial Land</h3>
-      <p>Land for business and investment.</p>
-    </div>
+        <div class="type-card">
+            <div class="type-icon">🏡</div>
+            <h3>Residential Plots</h3>
+            <p>Plots for your future home</p>
+        </div>
 
-    <div class="card">
-      <div class="category-icon">🏠</div>
-      <h3>Independent Houses</h3>
-      <p>Find houses across Telangana.</p>
-    </div>
+        <div class="type-card">
+            <div class="type-icon">🏢</div>
+            <h3>Commercial Land</h3>
+            <p>Properties for business purposes</p>
+        </div>
 
-    <div class="card">
-      <div class="category-icon">🏙️</div>
-      <h3>Apartments</h3>
-      <p>Modern apartments and communities.</p>
-    </div>
+        <div class="type-card">
+            <div class="type-icon">🌳</div>
+            <h3>Farm Land</h3>
+            <p>Farm and countryside properties</p>
+        </div>
 
-    <div class="card">
-      <div class="category-icon">🏘️</div>
-      <h3>Flats</h3>
-      <p>New and resale flats.</p>
     </div>
-
-    <div class="card">
-      <div class="category-icon">🏗️</div>
-      <h3>New Projects</h3>
-      <p>Explore upcoming property projects.</p>
-    </div>
-
-  </div>
 
 </section>
 
-<section>
 
-  <div class="section-title">
-    <h2>Featured Properties</h2>
-    <p>Demo listings — real properties will be added later.</p>
-  </div>
+<!-- LOCATIONS -->
 
-  <div class="properties">
+<section class="locations" id="locations">
 
-    <div class="card">
-      <div class="property-image">🌾</div>
-      <h3>Agricultural Land</h3>
-      <p>📍 Kadthal, Telangana</p>
-      <p>Extent: 2 Acres</p>
-      <div class="price">₹80 Lakhs</div>
-      <button>View Property</button>
+    <div class="section-title">
+
+        <h2>Popular Locations</h2>
+
+        <p>
+            Explore land and properties around Telangana
+        </p>
+
     </div>
 
-    <div class="card">
-      <div class="property-image">📐</div>
-      <h3>Residential Plot</h3>
-      <p>📍 Maheshwaram</p>
-      <p>Extent: 200 Sq. Yards</p>
-      <div class="price">₹35 Lakhs</div>
-      <button>View Property</button>
-    </div>
+    <div class="location-grid">
 
-    <div class="card">
-      <div class="property-image">🏠</div>
-      <h3>Independent House</h3>
-      <p>📍 Shadnagar</p>
-      <p>3 BHK House</p>
-      <div class="price">₹65 Lakhs</div>
-      <button>View Property</button>
-    </div>
+        <div class="location-card">Kadthal</div>
 
-    <div class="card">
-      <div class="property-image">🏢</div>
-      <h3>Apartment</h3>
-      <p>📍 Hyderabad</p>
-      <p>2 BHK Apartment</p>
-      <div class="price">₹75 Lakhs</div>
-      <button>View Property</button>
-    </div>
+        <div class="location-card">Kandukur</div>
 
-  </div>
+        <div class="location-card">Yacharam</div>
+
+        <div class="location-card">Maheshwaram</div>
+
+        <div class="location-card">Thukkuguda</div>
+
+        <div class="location-card">Ibrahimpatnam</div>
+
+        <div class="location-card">Shadnagar</div>
+
+        <div class="location-card">Chevella</div>
+
+        <div class="location-card">Shamshabad</div>
+
+        <div class="location-card">Vikarabad</div>
+
+        <div class="location-card">Ranga Reddy</div>
+
+        <div class="location-card">Hyderabad</div>
+
+    </div>
 
 </section>
 
-<section>
 
-  <div class="section-title">
-    <h2>Popular Locations</h2>
-    <p>Explore properties across Telangana.</p>
-  </div>
-
-  <div class="locations">
-
-    <div class="card"><h3>Hyderabad</h3></div>
-    <div class="card"><h3>Ranga Reddy</h3></div>
-    <div class="card"><h3>Kadthal</h3></div>
-    <div class="card"><h3>Maheshwaram</h3></div>
-    <div class="card"><h3>Thukkuguda</h3></div>
-    <div class="card"><h3>Shadnagar</h3></div>
-    <div class="card"><h3>Chevella</h3></div>
-    <div class="card"><h3>Vikarabad</h3></div>
-
-  </div>
-
-</section>
+<!-- SELL PROPERTY -->
 
 <section class="sell-section">
 
-  <h2>Want to Sell Your Property?</h2>
+    <h2>Want to Sell Your Property?</h2>
 
-  <p>
-    List your land, plot, house or apartment on BhoomiSetu.
-  </p>
+    <p>
+        List your land or property with BhoomiSetu
+        and connect with potential buyers.
+    </p>
 
-  <button class="gold-button"
-         <button onclick="window.location.href='list-property.html'">
-    List Property
-</button> ">
-  </button>
+    <a
+        href="list-property.html"
+        class="sell-btn">
+        List Your Property
+    </a>
 
 </section>
+
+
+<!-- HOW IT WORKS -->
 
 <section>
 
-  <div class="section-title">
-    <h2>How BhoomiSetu Works</h2>
-  </div>
+    <div class="section-title">
 
-  <div class="how-it-works">
+        <h2>How BhoomiSetu Works</h2>
 
-    <div class="step">
-      <div class="step-number">1</div>
-      <h3>List</h3>
-      <p>Seller lists property.</p>
+        <p>
+            Simple and transparent property connection
+        </p>
+
     </div>
 
-    <div class="step">
-      <div class="step-number">2</div>
-      <h3>Review</h3>
-      <p>Information is reviewed.</p>
-    </div>
+    <div class="steps">
 
-    <div class="step">
-      <div class="step-number">3</div>
-      <h3>Enquire</h3>
-      <p>Buyer sends enquiry.</p>
-    </div>
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Seller Lists</h3>
+            <p>Seller submits property details.</p>
+        </div>
 
-    <div class="step">
-      <div class="step-number">4</div>
-      <h3>Visit</h3>
-      <p>Schedule a site visit.</p>
-    </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Review</h3>
+            <p>BhoomiSetu reviews the listing.</p>
+        </div>
 
-    <div class="step">
-      <div class="step-number">5</div>
-      <h3>Negotiate</h3>
-      <p>Buyer and seller negotiate.</p>
-    </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Buyer Enquires</h3>
+            <p>Interested buyers contact us.</p>
+        </div>
 
-    <div class="step">
-      <div class="step-number">6</div>
-      <h3>Complete</h3>
-      <p>Transaction is completed.</p>
-    </div>
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>Site Visit</h3>
+            <p>We coordinate the property visit.</p>
+        </div>
 
-  </div>
+        <div class="step">
+            <div class="step-number">5</div>
+            <h3>Transaction</h3>
+            <p>Buyer and seller proceed with the transaction.</p>
+        </div>
+
+    </div>
 
 </section>
 
+
+<!-- CONTACT -->
+
+<section class="contact-section" id="contact">
+
+    <div class="section-title">
+
+        <h2>Contact BhoomiSetu</h2>
+
+        <p>
+            Get in touch with us for land and property enquiries
+        </p>
+
+    </div>
+
+    <div class="contact-container">
+
+        <div class="contact-card">
+
+            <h3>Contact Details</h3>
+
+            <div class="contact-item">
+
+                <strong>📞 Phone</strong>
+
+                <a href="tel:+919391569352">
+                    9391569352
+                </a>
+
+            </div>
+
+            <div class="contact-item">
+
+                <strong>💬 WhatsApp</strong>
+
+                <a
+                    href="https://wa.me/919391569352"
+                    target="_blank">
+                    Chat on WhatsApp
+                </a>
+
+            </div>
+
+            <div class="contact-item">
+
+                <strong>📧 Email</strong>
+
+                <a href="mailto:bhoomisetu14@gmail.com">
+                    bhoomisetu14@gmail.com
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-card">
+
+            <h3>Office Location</h3>
+
+            <div class="contact-item">
+
+                <strong>📍 BhoomiSetu Office</strong>
+
+                <p>
+                    Devi Gandhi Plaza,<br>
+                    Near Kadthal Toll Gate,<br>
+                    Kadthal,<br>
+                    Ranga Reddy District,<br>
+                    Telangana - 509358
+                </p>
+
+            </div>
+
+            <a
+                href="https://www.google.com/maps/search/?api=1&query=Devi+Gandhi+Plaza%2C+Near+Kadthal+Toll+Gate%2C+Kadthal%2C+Ranga+Reddy+District%2C+Telangana+509358"
+                target="_blank"
+                class="map-btn">
+                📍 Open in Google Maps
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
 <footer>
 
-  <h2>BhoomiSetu</h2>
+    <h3>BhoomiSetu</h3>
 
-  <p>A Brighter Tomorrow Together</p>
+    <p>
+        A Brighter Tomorrow Together
+    </p>
 
-  <p>Telangana Land & Property Marketplace</p>
+    <div class="footer-links">
 
-  <p>© 2026 BhoomiSetu. All Rights Reserved.</p>
+        <a href="index.html">Home</a>
+
+        <a href="list-property.html">
+            List Property
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </div>
+
+    <p>
+        © 2026 BhoomiSetu — All Rights Reserved
+    </p>
 
 </footer>
+
+
+<script>
+
+function searchProperty(){
+
+    const location =
+        document.getElementById("locationSearch").value.trim();
+
+    const type =
+        document.getElementById("propertyType").value;
+
+    const budget =
+        document.getElementById("budgetSearch").value.trim();
+
+    if(!location && !type && !budget){
+
+        alert(
+            "Please enter a location, property type or budget."
+        );
+
+        return;
+    }
+
+    alert(
+        "Property search feature is being prepared. " +
+        "Our team will help you find suitable properties."
+    );
+}
+
+</script>
 
 </body>
 </html>
