@@ -1,1 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>BhoomiSetu - Buy Land</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f5f8f5;
+    color:#183b27;
+}
+
+header{
+    background:#145a32;
+    color:white;
+    padding:15px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo img{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+    background:white;
+    border-radius:8px;
+}
+
+nav{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.hero{
+    background:linear-gradient(135deg,#e7f5e9,#ffffff);
+    text-align:center;
+    padding:45px 20px;
+}
+
+.hero h1{
+    margin:0 0 10px;
+    font-size:38px;
+}
+
+.hero p{
+    font-size:18px;
+    color:#555;
+}
+
+.search-box{
+    max-width:900px;
+    margin:25px auto 0;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:10px;
+}
+
+.search-box input,
+.search-box select{
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+button{
+    border:0;
+    border-radius:8px;
+    padding:13px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.search-btn{
+    background:#d4a72c;
+    color:white;
+}
+
+.container{
+    max-width:1200px;
+    margin:35px auto;
+    padding:0 18px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-title h2{
+    margin:0;
+    font-size:28px;
+}
+
+.count{
+    color:#666;
+}
+
+.properties{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.gallery{
+    height:220px;
+    position:relative;
+    background:#eee;
+}
+
+.gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.no-image{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#777;
+}
+
+.badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:#237a45;
+    color:white;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.card-body{
+    padding:18px;
+}
+
+.card h3{
+    margin:0 0 12px;
+    font-size:21px;
+}
+
+.location{
+    color:#555;
+    margin-bottom:12px;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin:15px 0;
+}
+
+.detail{
+    background:#f3f7f3;
+    padding:10px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+.price{
+    color:#145a32;
+    font-size:22px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.actions a{
+    text-align:center;
+    text-decoration:none;
+    padding:12px 8px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.maps{
+    background:#e8f3ea;
+    color:#145a32;
+}
+
+.whatsapp{
+    background:#25d366;
+    color:white;
+}
+
+.sitevisit{
+    grid-column:1 / -1;
+    background:#d4a72c;
+    color:white;
+}
+
+.description{
+    color:#555;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.loading,
+.empty,
+.error{
+    text-align:center;
+    padding:50px 20px;
+    background:white;
+    border-radius:12px;
+}
+
+footer{
+    margin-top:60px;
+    background:#123d24;
+    color:white;
+    text-align:center;
+    padding:30px 20px;
+}
+
+@media(max-width:900px){
+    .properties{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .search-box{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    header{
+        justify-content:center;
+    }
+
+    nav{
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .search-box{
+        grid-template-columns:1fr;
+    }
+
+    .properties{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <img src="Logo.PNG" alt="BhoomiSetu">
+        <span>BhoomiSetu</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="buy.html">Buy Land</a>
+        <a href="list-property.html">Sell Land</a>
+        <a href="index.html#contact">Contact</a>
+    </nav>
+
+</header>
+
+<section class="hero">
+
+    <h1>Find Your Right Land</h1>
+
+    <p>తెలంగాణలో మీకు కావాల్సిన భూమిని కనుగొనండి</p>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="locationSearch"
+            placeholder="Search village / mandal / district"
+        >
+
+        <select id="propertyType">
+            <option value="">All Property Types</option>
+            <option value="Agricultural Land">Agricultural Land</option>
+            <option value="Residential Plot">Residential Plot</option>
+            <option value="Commercial Land">Commercial Land</option>
+            <option value="Farm Land">Farm Land</option>
+            <option value="Development Land">Development Land</option>
+        </select>
+
+        <select id="sortPrice">
+            <option value="">Sort Price</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+        </select>
+
+        <button class="search-btn" onclick="searchProperties()">
+            🔎 Search
+        </button>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>Available Properties</h2>
+
+        <div class="count" id="propertyCount">
+            Loading...
+        </div>
+
+    </div>
+
+    <div id="propertyList" class="properties">
+
+        <div class="loading">
+            Loading properties...
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <h3>BhoomiSetu</h3>
+
+    <p>A Brighter Tomorrow Together</p>
+
+    <p>📞 9391569352</p>
+
+    <p>📧 bhoomisetu14@gmail.com</p>
+
+    <p>Devi Gandhi Plaza, Near Kadthal Toll Gate, Kadthal, Ranga Reddy District, Telangana - 509358</p>
+
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://vaqzzxkfcawasufavmxn.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_F-vFp9fHz3_MbD3lz2oYTQ_-Ah28nsX";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let allProperties = [];
+
+
+/* LOAD APPROVED PROPERTIES */
+
+async function loadProperties(){
+
+    const container =
+        document.getElementById("propertyList");
+
+    container.innerHTML =
+        '<div class="loading">Loading properties...</div>';
+
+    const { data, error } =
+        await supabaseClient
+        .from("public_properties")
+        .select("*")
+        .order("created_at", { ascending:false });
+
+    if(error){
+
+        console.error(error);
+
+        container.innerHTML =
+            '<div class="error">Unable to load properties. Please try again.</div>';
+
+        document.getElementById("propertyCount").innerText =
+            "0 Properties";
+
+        return;
+    }
+
+    allProperties = data || [];
+
+    displayProperties(allProperties);
+}
+
+
+/* DISPLAY PROPERTIES */
+
+function displayProperties(properties){
+
+    const container =
+        document.getElementById("propertyList");
+
+    document.getElementById("propertyCount").innerText =
+        properties.length + " Properties";
+
+    if(properties.length === 0){
+
+        container.innerHTML =
+            '<div class="empty">No approved properties available right now.</div>';
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    properties.forEach(property => {
+
+        let photo = "";
+
+        if(property.photo_urls){
+
+            if(Array.isArray(property.photo_urls)){
+
+                photo = property.photo_urls[0] || "";
+
+            }else{
+
+                try{
+
+                    const photos =
+                        JSON.parse(property.photo_urls);
+
+                    photo =
+                        Array.isArray(photos)
+                        ? photos[0]
+                        : "";
+
+                }catch(e){
+
+                    photo = "";
+                }
+            }
+        }
+
+
+        const card =
+        document.createElement("div");
+
+        card.className = "card";
+
+
+        let gallery = "";
+
+        if(photo){
+
+            gallery =
+            `
+            <div class="gallery">
+
+                <img
+                    src="${photo}"
+                    alt="Property Photo"
+                >
+
+                <div class="badge">
+                    ✓ Approved
+                </div>
+
+            </div>
+            `;
+
+        }else{
+
+            gallery =
+            `
+            <div class="gallery">
+
+                <div class="no-image">
+                    No Property Image
+                </div>
+
+                <div class="badge">
+                    ✓ Approved
+                </div>
+
+            </div>
+            `;
+        }
+
+
+        let mapButton = "";
+
+        if(property.google_maps){
+
+            mapButton =
+            `
+            <a
+                class="maps"
+                href="${property.google_maps}"
+                target="_blank"
+            >
+                📍 Google Maps
+            </a>
+            `;
+        }
+
+
+        let videoButton = "";
+
+        if(property.video_url){
+
+            videoButton =
+            `
+            <a
+                class="sitevisit"
+                href="${property.video_url}"
+                target="_blank"
+            >
+                🎥 View Property Video
+            </a>
+            `;
+        }
+
+
+        const whatsappMessage =
+            encodeURIComponent(
+                "Hi BhoomiSetu, I am interested in this property. Property ID: " +
+                property.id
+            );
+
+
+        card.innerHTML =
+        `
+        ${gallery}
+
+        <div class="card-body">
+
+            <h3>
+                ${property.property_type || "Land Property"}
+            </h3>
+
+            <div class="location">
+                📍 ${property.village || ""}, 
+                ${property.mandal || ""}, 
+                ${property.district || ""}
+            </div>
+
+            <div class="details">
+
+                <div class="detail">
+                    📐 <b>Land Size</b><br>
+                    ${property.land_size || "-"}
+                </div>
+
+                <div class="detail">
+                    🚗 <b>Road Access</b><br>
+                    ${property.road_access || "-"}
+                </div>
+
+            </div>
+
+            <div class="price">
+                ₹ ${property.expected_price || "Price on Request"}
+            </div>
+
+            ${
+                property.description
+                ?
+                `<div class="description">
+                    ${property.description}
+                </div>`
+                :
+                ""
+            }
+
+            <div class="actions">
+
+                ${mapButton}
+
+                <a
+                    class="whatsapp"
+                    href="https://wa.me/919391569352?text=${whatsappMessage}"
+                    target="_blank"
+                >
+                    💬 WhatsApp
+                </a>
+
+                <a
+                    class="sitevisit"
+                    href="https://wa.me/919391569352?text=${encodeURIComponent(
+                        "Hi BhoomiSetu, I want to schedule a site visit for Property ID: " +
+                        property.id
+                    )}"
+                    target="_blank"
+                >
+                    📅 Schedule Site Visit
+                </a>
+
+                ${videoButton}
+
+            </div>
+
+        </div>
+        `;
+
+
+        container.appendChild(card);
+
+    });
+}
+
+
+/* SEARCH */
+
+function searchProperties(){
+
+    const location =
+        document
+        .getElementById("locationSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const type =
+        document
+        .getElementById("propertyType")
+        .value;
+
+    const sort =
+        document
+        .getElementById("sortPrice")
+        .value;
+
+
+    let filtered =
+        allProperties.filter(property => {
+
+            const locationText =
+                (
+                    (property.village || "") +
+                    " " +
+                    (property.mandal || "") +
+                    " " +
+                    (property.district || "")
+                ).toLowerCase();
+
+
+            const locationMatch =
+                !location ||
+                locationText.includes(location);
+
+
+            const typeMatch =
+                !type ||
+                property.property_type === type;
+
+
+            return locationMatch && typeMatch;
+
+        });
+
+
+    if(sort === "low"){
+
+        filtered.sort((a,b) =>
+            extractNumber(a.expected_price) -
+            extractNumber(b.expected_price)
+        );
+
+    }
+
+    if(sort === "high"){
+
+        filtered.sort((a,b) =>
+            extractNumber(b.expected_price) -
+            extractNumber(a.expected_price)
+        );
+
+    }
+
+
+    displayProperties(filtered);
+}
+
+
+/* PRICE SORT HELPER */
+
+function extractNumber(value){
+
+    if(!value) return 0;
+
+    const number =
+        String(value)
+        .replace(/[^0-9.]/g,"");
+
+    return parseFloat(number) || 0;
+}
+
+
+/* ENTER KEY SEARCH */
+
+document
+.getElementById("locationSearch")
+.addEventListener("keypress", function(event){
+
+    if(event.key === "Enter"){
+
+        searchProperties();
+
+    }
+
+});
+
+
+/* START */
+
+loadProperties();
+
+</script>
+
+</body>
+</html>
