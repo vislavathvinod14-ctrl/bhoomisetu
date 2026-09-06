@@ -10,380 +10,418 @@
 
 <style>
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f8f5;
-  color:#173b2a;
-}
-
-header{
-  background:white;
-  padding:15px 6%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-}
-
-.logo{
-  height:58px;
-  width:auto;
-}
-
-.back{
-  text-decoration:none;
-  color:#167044;
-  font-weight:bold;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f8f5;
+    color:#173b2a;
 }
 
 .container{
-  max-width:850px;
-  margin:35px auto;
-  padding:0 18px;
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-.card{
-  background:white;
-  border-radius:18px;
-  padding:28px;
-  box-shadow:0 5px 25px rgba(0,0,0,.08);
+.logo{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.logo img{
+    width:180px;
+    max-width:70%;
 }
 
 h1{
-  text-align:center;
-  margin-bottom:8px;
-  color:#146b3a;
+    text-align:center;
+    color:#286b42;
+    margin-bottom:5px;
 }
 
 .subtitle{
-  text-align:center;
-  color:#666;
-  margin-bottom:30px;
+    text-align:center;
+    color:#666;
+    margin-bottom:35px;
+    font-size:18px;
 }
 
 .section{
-  margin-top:28px;
-  margin-bottom:10px;
-  padding-bottom:8px;
-  border-bottom:2px solid #e4eee7;
-  color:#146b3a;
+    margin-top:30px;
+}
+
+.section h2{
+    color:#286b42;
+    border-bottom:2px solid #dce9df;
+    padding-bottom:10px;
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  margin-top:16px;
-  margin-bottom:7px;
+    display:block;
+    font-weight:bold;
+    margin-top:18px;
+    margin-bottom:7px;
 }
 
-input,select,textarea{
-  width:100%;
-  padding:13px;
-  border:1px solid #ccd8cf;
-  border-radius:9px;
-  font-size:15px;
-  background:white;
+input,
+select,
+textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid #cbd9d0;
+    border-radius:10px;
+    font-size:16px;
+    background:white;
 }
 
 textarea{
-  min-height:110px;
-  resize:vertical;
+    min-height:130px;
+    resize:vertical;
 }
 
-input:focus,select:focus,textarea:focus{
-  outline:none;
-  border-color:#168044;
+.location-box{
+    background:#f1f8f3;
+    padding:18px;
+    border-radius:12px;
+    margin-top:10px;
 }
 
-.upload-box{
-  border:2px dashed #9dbdaa;
-  border-radius:12px;
-  padding:20px;
-  margin-top:10px;
-  background:#f8fcf9;
-}
-
-.upload-box input{
-  border:none;
-  padding:5px 0;
-}
-
-.help{
-  font-size:13px;
-  color:#666;
-  margin-top:6px;
+button{
+    border:0;
+    border-radius:10px;
+    padding:14px 22px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .location-btn{
-  margin-top:10px;
-  padding:12px 16px;
-  border:none;
-  border-radius:8px;
-  background:#e7f4eb;
-  color:#146b3a;
-  font-weight:bold;
-  cursor:pointer;
+    background:#dff1e5;
+    color:#176638;
+    margin-top:12px;
 }
 
 .submit-btn{
-  width:100%;
-  margin-top:30px;
-  padding:16px;
-  border:none;
-  border-radius:10px;
-  background:#168044;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
+    width:100%;
+    background:#237642;
+    color:white;
+    font-size:18px;
+    margin-top:30px;
 }
 
 .submit-btn:disabled{
-  background:#8fa99a;
-  cursor:not-allowed;
+    background:#9bb5a4;
+    cursor:not-allowed;
 }
 
-.status{
-  margin-top:18px;
-  padding:14px;
-  border-radius:9px;
-  display:none;
-  text-align:center;
-  font-weight:bold;
+.upload-box{
+    border:2px dashed #9bc5aa;
+    background:#f7fbf8;
+    padding:20px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+input[type="file"]{
+    padding:10px;
+}
+
+.help{
+    color:#777;
+    font-size:14px;
+    margin-top:7px;
+}
+
+.progress{
+    display:none;
+    margin-top:20px;
+    background:#edf3ef;
+    border-radius:10px;
+    padding:15px;
 }
 
 .success{
-  display:block;
-  background:#e5f7e9;
-  color:#146b3a;
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    background:#e4f6e9;
+    border:1px solid #9bd1aa;
+    color:#176638;
+    border-radius:12px;
+    font-weight:bold;
 }
 
 .error{
-  display:block;
-  background:#fdeaea;
-  color:#a12626;
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    background:#fff0f0;
+    border:1px solid #e5aaaa;
+    color:#a02020;
+    border-radius:12px;
+    font-weight:bold;
 }
 
-.preview{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:15px;
+.footer{
+    text-align:center;
+    margin-top:35px;
+    color:#777;
+    font-size:14px;
 }
 
-.preview img{
-  width:100px;
-  height:80px;
-  object-fit:cover;
-  border-radius:8px;
-}
+@media(max-width:700px){
+    .container{
+        margin:0;
+        border-radius:0;
+        padding:22px;
+    }
 
-footer{
-  text-align:center;
-  padding:25px;
-  color:#777;
-  font-size:13px;
-}
-
-@media(max-width:600px){
-  header{
-    padding:12px 18px;
-  }
-
-  .logo{
-    height:48px;
-  }
-
-  .card{
-    padding:20px;
-  }
+    h1{
+        font-size:30px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <a href="index.html">
-    <img src="Logo.PNG" class="logo" alt="BhoomiSetu">
-  </a>
-
-  <a href="index.html" class="back">← Back to Home</a>
-</header>
-
 <div class="container">
 
-<div class="card">
+    <div class="logo">
+        <img src="Logo.PNG" alt="BhoomiSetu Logo">
+    </div>
 
-<h1>List Your Property</h1>
+    <h1>List Your Property</h1>
 
-<div class="subtitle">
-Sell your land or property with BhoomiSetu
+    <div class="subtitle">
+        Sell your land or property with BhoomiSetu
+    </div>
+
+    <form id="propertyForm">
+
+        <!-- SELLER DETAILS -->
+        <div class="section">
+            <h2>Seller Details</h2>
+
+            <label>Full Name *</label>
+            <input type="text" id="seller_name" required>
+
+            <label>Mobile Number *</label>
+            <input type="tel" id="mobile" required
+                   placeholder="10 digit mobile number">
+
+            <label>WhatsApp Number</label>
+            <input type="tel" id="whatsapp"
+                   placeholder="WhatsApp number">
+
+            <label>Seller Type *</label>
+            <select id="seller_type" required>
+                <option value="">Select Seller Type</option>
+                <option value="Land Owner">Land Owner</option>
+                <option value="Developer">Developer</option>
+                <option value="Authorized Representative">
+                    Authorized Representative
+                </option>
+                <option value="Agent">Agent</option>
+            </select>
+        </div>
+
+
+        <!-- PROPERTY DETAILS -->
+        <div class="section">
+            <h2>Property Details</h2>
+
+            <label>District *</label>
+            <input type="text" id="district"
+                   placeholder="Example: Rangareddy"
+                   required>
+
+            <label>Mandal *</label>
+            <input type="text" id="mandal"
+                   placeholder="Example: Kadthal"
+                   required>
+
+            <label>Village *</label>
+            <input type="text" id="village"
+                   placeholder="Example: Kadthal"
+                   required>
+
+            <label>Property Type *</label>
+            <select id="property_type" required>
+                <option value="">Select Property Type</option>
+                <option value="Agricultural Land">
+                    Agricultural Land
+                </option>
+                <option value="Farm Land">
+                    Farm Land
+                </option>
+                <option value="Residential Plot">
+                    Residential Plot
+                </option>
+                <option value="Commercial Land">
+                    Commercial Land
+                </option>
+                <option value="Development Land">
+                    Development Land
+                </option>
+                <option value="Other">
+                    Other
+                </option>
+            </select>
+
+            <label>Land Size / Extent *</label>
+            <input type="text" id="land_size"
+                   placeholder="Example: 2 Acres / 10 Guntas"
+                   required>
+
+            <label>Expected Price *</label>
+            <input type="text" id="expected_price"
+                   placeholder="Example: ₹80 Lakhs"
+                   required>
+
+            <label>Road Access</label>
+            <select id="road_access">
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Main Road">Main Road</option>
+                <option value="Village Road">Village Road</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+
+        <!-- LOCATION -->
+        <div class="section">
+            <h2>Property Location</h2>
+
+            <div class="location-box">
+
+                <label>Google Maps Location</label>
+
+                <input type="text"
+                       id="google_maps"
+                       placeholder="Location will be added automatically">
+
+                <button type="button"
+                        class="location-btn"
+                        onclick="getLocation()">
+                    📍 Use My Current Location
+                </button>
+
+                <div class="help">
+                    Stand at the property location and tap the button.
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- DESCRIPTION -->
+        <div class="section">
+            <h2>Property Information</h2>
+
+            <label>Property Description</label>
+
+            <textarea id="description"
+                      placeholder="Enter important property details, road access, nearby landmarks, etc."></textarea>
+        </div>
+
+
+        <!-- PHOTOS -->
+        <div class="section">
+
+            <h2>Property Photos</h2>
+
+            <div class="upload-box">
+
+                <label>Select Property Photos</label>
+
+                <input type="file"
+                       id="photos"
+                       accept="image/*"
+                       multiple>
+
+                <div class="help">
+                    You can select multiple photos from your phone gallery.
+                    Maximum 10 photos.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VIDEO -->
+        <div class="section">
+
+            <h2>Property Video</h2>
+
+            <div class="upload-box">
+
+                <label>Select Property Video</label>
+
+                <input type="file"
+                       id="video"
+                       accept="video/*">
+
+                <div class="help">
+                    Select one property video from your phone.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div class="section">
+
+            <h2>Submit Property</h2>
+
+            <p>
+                By submitting this form, you confirm that the information
+                provided is correct and may be used by BhoomiSetu for
+                property marketing and buyer enquiries.
+            </p>
+
+            <div id="progress" class="progress">
+                Uploading property information... Please wait.
+            </div>
+
+            <div id="success" class="success"></div>
+
+            <div id="error" class="error"></div>
+
+            <button type="submit"
+                    id="submitBtn"
+                    class="submit-btn">
+                Submit Property
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div class="footer">
+        © 2026 BhoomiSetu — A Brighter Tomorrow Together
+    </div>
+
 </div>
-
-<form id="propertyForm">
-
-<h2 class="section">Seller Details</h2>
-
-<label>Full Name *</label>
-<input type="text" id="seller_name" required>
-
-<label>Mobile Number *</label>
-<input type="tel" id="mobile" required>
-
-<label>WhatsApp Number</label>
-<input type="tel" id="whatsapp">
-
-<label>Seller Type *</label>
-<select id="seller_type" required>
-<option value="">Select Seller Type</option>
-<option>Land Owner</option>
-<option>Developer</option>
-<option>Authorized Representative</option>
-<option>Agent</option>
-</select>
-
-
-<h2 class="section">Property Details</h2>
-
-<label>District *</label>
-<input type="text" id="district" placeholder="Example: Rangareddy" required>
-
-<label>Mandal *</label>
-<input type="text" id="mandal" required>
-
-<label>Village *</label>
-<input type="text" id="village" required>
-
-<label>Survey Number</label>
-<input type="text" id="survey_number">
-
-<label>Property Type *</label>
-<select id="property_type" required>
-<option value="">Select Property Type</option>
-<option>Agricultural Land</option>
-<option>Farm Land</option>
-<option>Residential Plot</option>
-<option>Commercial Land</option>
-<option>Development Land</option>
-<option>Other</option>
-</select>
-
-<label>Land Size *</label>
-<input type="text" id="land_size" placeholder="Example: 2 Acres / 500 Sq Yards" required>
-
-<label>Expected Price *</label>
-<input type="text" id="expected_price" placeholder="Example: ₹80 Lakhs" required>
-
-<label>Road Access</label>
-<select id="road_access">
-<option value="">Select</option>
-<option>Yes - Main Road</option>
-<option>Yes - Village Road</option>
-<option>Yes - Internal Road</option>
-<option>No</option>
-<option>Not Sure</option>
-</select>
-
-
-<h2 class="section">Property Location</h2>
-
-<label>Google Maps Location</label>
-
-<input
-type="text"
-id="google_maps"
-placeholder="Location will be added automatically or paste Google Maps link">
-
-<button type="button" class="location-btn" onclick="getLocation()">
-📍 Use My Current Location
-</button>
-
-<div class="help">
-Allow location permission when your phone asks.
-</div>
-
-
-<label>Property Description</label>
-
-<textarea
-id="description"
-placeholder="Enter important property details, road access, nearby landmarks, etc."></textarea>
-
-
-<h2 class="section">Property Photos</h2>
-
-<div class="upload-box">
-
-<label>Select Property Photos</label>
-
-<input
-type="file"
-id="photos"
-accept="image/*"
-multiple>
-
-<div class="help">
-You can select multiple photos from your phone gallery.
-</div>
-
-<div id="photoPreview" class="preview"></div>
-
-</div>
-
-
-<h2 class="section">Property Video</h2>
-
-<div class="upload-box">
-
-<label>Select Property Video</label>
-
-<input
-type="file"
-id="video"
-accept="video/*">
-
-<div class="help">
-Select one property video from your phone.
-</div>
-
-</div>
-
-
-<h2 class="section">Submit</h2>
-
-<p class="help">
-By submitting this form, you confirm that the information provided is correct.
-BhoomiSetu may use the submitted information, photos and video for property
-marketing and buyer enquiries. Property verification and legal review may be
-required before any transaction.
-</p>
-
-<button type="submit" class="submit-btn" id="submitBtn">
-Submit Property
-</button>
-
-<div id="status" class="status"></div>
-
-</form>
-
-</div>
-</div>
-
-<footer>
-© 2026 BhoomiSetu — A Brighter Tomorrow Together
-</footer>
 
 
 <script>
 
-/* ================================
+/* =========================================
    SUPABASE CONNECTION
-================================ */
+========================================= */
 
 const SUPABASE_URL =
 "https://vaqzzxkfcawasufavmxn.supabase.co";
@@ -392,330 +430,448 @@ const SUPABASE_KEY =
 "sb_publishable_F-vFp9fHz3_MbD3lz2oYTQ_-Ah28nsX";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
 
-/* ================================
-   GOOGLE MAPS LOCATION
-================================ */
+/* =========================================
+   GOOGLE MAPS CURRENT LOCATION
+========================================= */
 
 function getLocation(){
 
-  if(!navigator.geolocation){
-    alert("Location is not supported on this device.");
-    return;
-  }
+    const mapsInput =
+        document.getElementById("google_maps");
 
-  navigator.geolocation.getCurrentPosition(
+    if(!navigator.geolocation){
 
-    function(position){
+        alert("Location is not supported on this device.");
 
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      const mapLink =
-      "https://www.google.com/maps?q=" + lat + "," + lng;
-
-      document.getElementById("google_maps").value = mapLink;
-
-      alert("Location added successfully.");
-
-    },
-
-    function(){
-      alert("Please allow location access in your browser.");
+        return;
     }
 
-  );
+    mapsInput.value =
+        "Getting your location...";
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            const lat =
+                position.coords.latitude;
+
+            const lng =
+                position.coords.longitude;
+
+            const mapsUrl =
+                "https://www.google.com/maps?q="
+                + lat + "," + lng;
+
+            mapsInput.value =
+                mapsUrl;
+
+            alert(
+                "📍 Location added successfully!"
+            );
+        },
+
+        function(error){
+
+            mapsInput.value = "";
+
+            alert(
+                "Please allow location permission and try again."
+            );
+
+        },
+
+        {
+            enableHighAccuracy:true,
+            timeout:15000,
+            maximumAge:0
+        }
+    );
 }
 
 
-/* ================================
-   PHOTO PREVIEW
-================================ */
-
-document.getElementById("photos").addEventListener(
-"change",
-function(){
-
-  const preview =
-  document.getElementById("photoPreview");
-
-  preview.innerHTML="";
-
-  Array.from(this.files).forEach(function(file){
-
-    const reader = new FileReader();
-
-    reader.onload=function(e){
-
-      const img=document.createElement("img");
-
-      img.src=e.target.result;
-
-      preview.appendChild(img);
-
-    };
-
-    reader.readAsDataURL(file);
-
-  });
-
-});
-
-
-/* ================================
+/* =========================================
    FILE UPLOAD
-================================ */
+========================================= */
 
 async function uploadFile(file, folder){
 
-  const safeName =
-  file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-
-  const fileName =
-  Date.now() + "_" +
-  Math.random().toString(36).substring(2,8) +
-  "_" +
-  safeName;
-
-  const filePath =
-  folder + "/" + fileName;
-
-
-  const { error } =
-  await supabaseClient
-  .storage
-  .from("Property-photos")
-  .upload(filePath,file,{
-    cacheControl:"3600",
-    upsert:false
-  });
-
-
-  if(error){
-    throw error;
-  }
-
-
-  const { data } =
-  supabaseClient
-  .storage
-  .from("Property-photos")
-  .getPublicUrl(filePath);
-
-
-  return data.publicUrl;
-}
-
-
-/* ================================
-   FORM SUBMIT
-================================ */
-
-document.getElementById("propertyForm")
-.addEventListener("submit", async function(e){
-
-  e.preventDefault();
-
-  const submitBtn =
-  document.getElementById("submitBtn");
-
-  const status =
-  document.getElementById("status");
-
-
-  submitBtn.disabled=true;
-
-  submitBtn.innerText=
-  "Uploading & Submitting...";
-
-  status.className="status";
-
-  status.style.display="none";
-
-
-  try{
-
-    /* ---------- GET FORM DATA ---------- */
-
-    const seller_name =
-    document.getElementById("seller_name").value.trim();
-
-    const mobile =
-    document.getElementById("mobile").value.trim();
-
-    const whatsapp =
-    document.getElementById("whatsapp").value.trim();
-
-    const seller_type =
-    document.getElementById("seller_type").value;
-
-    const district =
-    document.getElementById("district").value.trim();
-
-    const mandal =
-    document.getElementById("mandal").value.trim();
-
-    const village =
-    document.getElementById("village").value.trim();
-
-    const survey_number =
-    document.getElementById("survey_number").value.trim();
-
-    const property_type =
-    document.getElementById("property_type").value;
-
-    const land_size =
-    document.getElementById("land_size").value.trim();
-
-    const expected_price =
-    document.getElementById("expected_price").value.trim();
-
-    const road_access =
-    document.getElementById("road_access").value;
-
-    const google_maps =
-    document.getElementById("google_maps").value.trim();
-
-    const description =
-    document.getElementById("description").value.trim();
-
-
-    /* ---------- PHOTOS ---------- */
-
-    const photoFiles =
-    document.getElementById("photos").files;
-
-    let photoUrls=[];
-
-
-    for(let i=0;i<photoFiles.length;i++){
-
-      const url =
-      await uploadFile(
-        photoFiles[i],
-        "photos"
-      );
-
-      photoUrls.push(url);
-
-    }
-
-
-    /* ---------- VIDEO ---------- */
-
-    const videoFile =
-    document.getElementById("video").files[0];
-
-    let videoUrl=null;
-
-
-    if(videoFile){
-
-      videoUrl =
-      await uploadFile(
-        videoFile,
-        "videos"
-      );
-
-    }
-
-
-    /* ---------- DATABASE ---------- */
-
-    const {data,error} =
-    await supabaseClient
-    .from("properties")
-    .insert({
-
-      seller_name:seller_name,
-
-      mobile:mobile,
-
-      whatsapp:whatsapp,
-
-      seller_type:seller_type,
-
-      district:district,
-
-      mandal:mandal,
-
-      village:village,
-
-      survey_number:survey_number,
-
-      property_type:property_type,
-
-      land_size:land_size,
-
-      expected_price:expected_price,
-
-      road_access:road_access,
-
-      google_maps:google_maps,
-
-      description:description,
-
-      photo_urls:photoUrls,
-
-      video_url:videoUrl
-
-    })
-    .select();
+    const extension =
+        file.name.split(".").pop();
+
+    const randomName =
+        Date.now()
+        + "-"
+        + Math.random()
+            .toString(36)
+            .substring(2,10)
+        + "."
+        + extension;
+
+    const filePath =
+        folder + "/" + randomName;
+
+
+    const { data, error } =
+        await supabaseClient
+        .storage
+        .from("Property-photos")
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:"3600",
+                upsert:false
+            }
+        );
 
 
     if(error){
-      throw error;
+
+        throw new Error(
+            "File upload failed: "
+            + error.message
+        );
     }
 
 
-    /* ---------- SUCCESS ---------- */
-
-    status.className="status success";
-
-    status.innerHTML=
-    "✅ Property submitted successfully!<br><br>" +
-    "BhoomiSetu team will review your property details.";
-
-    status.style.display="block";
+    const { data:publicData } =
+        supabaseClient
+        .storage
+        .from("Property-photos")
+        .getPublicUrl(filePath);
 
 
-    document.getElementById("propertyForm").reset();
-
-    document.getElementById("photoPreview").innerHTML="";
-
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
+    return publicData.publicUrl;
+}
 
 
-  }catch(error){
+/* =========================================
+   FORM SUBMISSION
+========================================= */
 
-    console.error(error);
+document
+.getElementById("propertyForm")
+.addEventListener(
+    "submit",
+    async function(event){
 
-    status.className="status error";
-
-    status.innerHTML=
-    "❌ Submission failed.<br><br>" +
-    error.message;
-
-    status.style.display="block";
-
-  }
+        event.preventDefault();
 
 
-  submitBtn.disabled=false;
+        const submitBtn =
+            document.getElementById("submitBtn");
 
-  submitBtn.innerText=
-  "Submit Property";
+        const progress =
+            document.getElementById("progress");
 
-});
+        const success =
+            document.getElementById("success");
+
+        const errorBox =
+            document.getElementById("error");
+
+
+        success.style.display = "none";
+        errorBox.style.display = "none";
+
+        submitBtn.disabled = true;
+
+        progress.style.display = "block";
+
+
+        try{
+
+            /* ==============================
+               GET FORM DATA
+            ============================== */
+
+            const seller_name =
+                document
+                .getElementById("seller_name")
+                .value.trim();
+
+            const mobile =
+                document
+                .getElementById("mobile")
+                .value.trim();
+
+            const whatsapp =
+                document
+                .getElementById("whatsapp")
+                .value.trim();
+
+            const seller_type =
+                document
+                .getElementById("seller_type")
+                .value;
+
+            const district =
+                document
+                .getElementById("district")
+                .value.trim();
+
+            const mandal =
+                document
+                .getElementById("mandal")
+                .value.trim();
+
+            const village =
+                document
+                .getElementById("village")
+                .value.trim();
+
+            const property_type =
+                document
+                .getElementById("property_type")
+                .value;
+
+            const land_size =
+                document
+                .getElementById("land_size")
+                .value.trim();
+
+            const expected_price =
+                document
+                .getElementById("expected_price")
+                .value.trim();
+
+            const road_access =
+                document
+                .getElementById("road_access")
+                .value;
+
+            const google_maps =
+                document
+                .getElementById("google_maps")
+                .value.trim();
+
+            const description =
+                document
+                .getElementById("description")
+                .value.trim();
+
+
+            /* ==============================
+               MOBILE VALIDATION
+            ============================== */
+
+            if(!/^[0-9]{10}$/.test(mobile)){
+
+                throw new Error(
+                    "Please enter a valid 10 digit mobile number."
+                );
+            }
+
+
+            /* ==============================
+               PHOTOS
+            ============================== */
+
+            const photoInput =
+                document.getElementById("photos");
+
+            const photoFiles =
+                Array.from(photoInput.files);
+
+
+            if(photoFiles.length > 10){
+
+                throw new Error(
+                    "Maximum 10 photos can be uploaded."
+                );
+            }
+
+
+            const photoUrls = [];
+
+
+            for(
+                let i=0;
+                i<photoFiles.length;
+                i++
+            ){
+
+                progress.innerText =
+                    "Uploading photo "
+                    + (i+1)
+                    + " of "
+                    + photoFiles.length
+                    + "...";
+
+
+                const url =
+                    await uploadFile(
+                        photoFiles[i],
+                        "photos"
+                    );
+
+                photoUrls.push(url);
+            }
+
+
+            /* ==============================
+               VIDEO
+            ============================== */
+
+            const videoInput =
+                document.getElementById("video");
+
+            const videoFile =
+                videoInput.files[0];
+
+            let videoUrl = "";
+
+
+            if(videoFile){
+
+                progress.innerText =
+                    "Uploading property video...";
+
+
+                videoUrl =
+                    await uploadFile(
+                        videoFile,
+                        "videos"
+                    );
+            }
+
+
+            /* ==============================
+               SAVE TO DATABASE
+            ============================== */
+
+            progress.innerText =
+                "Saving property details...";
+
+
+            const propertyData = {
+
+                seller_name:
+                    seller_name,
+
+                mobile:
+                    mobile,
+
+                whatsapp:
+                    whatsapp,
+
+                seller_type:
+                    seller_type,
+
+                district:
+                    district,
+
+                mandal:
+                    mandal,
+
+                village:
+                    village,
+
+                property_type:
+                    property_type,
+
+                land_size:
+                    land_size,
+
+                expected_price:
+                    expected_price,
+
+                google_maps:
+                    google_maps,
+
+                description:
+                    description,
+
+                photo_urls:
+                    photoUrls.join(","),
+
+                video_url:
+                    videoUrl,
+
+                status:
+                    "Pending Review",
+
+                road_access:
+                    road_access
+            };
+
+
+            const { data, error } =
+                await supabaseClient
+                .from("properties")
+                .insert([
+                    propertyData
+                ])
+                .select();
+
+
+            if(error){
+
+                throw new Error(
+                    "Database error: "
+                    + error.message
+                );
+            }
+
+
+            /* ==============================
+               SUCCESS
+            ============================== */
+
+            progress.style.display =
+                "none";
+
+            success.style.display =
+                "block";
+
+            success.innerHTML =
+                "✅ Property submitted successfully!<br><br>" +
+                "Our BhoomiSetu team will review the details " +
+                "and contact you shortly.";
+
+
+            document
+            .getElementById("propertyForm")
+            .reset();
+
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            progress.style.display =
+                "none";
+
+            errorBox.style.display =
+                "block";
+
+            errorBox.innerText =
+                "❌ " + error.message;
+
+        }
+
+        finally{
+
+            submitBtn.disabled =
+                false;
+        }
+
+    }
+);
 
 </script>
 
