@@ -898,16 +898,7 @@ function displayProperties(properties){
         💬 WhatsApp
     </a>
 
-    <a
-        class="sitevisit"
-        href="https://wa.me/919391569352?text=${encodeURIComponent(
-            "Hi BhoomiSetu, I want to schedule a site visit for Property ID: " +
-            property.id
-        )}"
-        target="_blank"
-    >
-        📅 Schedule Site Visit
-    </a>
+    <a class="sitevisit" href="property-details.html?id=${encodeURIComponent(property.id)}#siteVisitForm">📅 Schedule Site Visit</a>
 
     ${videoButton}
 
