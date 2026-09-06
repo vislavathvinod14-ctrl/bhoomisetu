@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>List Your Property | BhoomiSetu</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f7f8f5;
+  color: #173b2a;
+}
+
+header {
+  background: white;
+  padding: 18px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+  width: 150px;
+}
+
+nav a {
+  margin: 0 12px;
+  text-decoration: none;
+  color: #173b2a;
+  font-weight: 500;
+}
+
+.home-btn {
+  background: #238b45;
+  color: white;
+  padding: 11px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 45px 20px 25px;
+}
+
+.hero h1 {
+  font-size: 38px;
+  color: #277c45;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #666;
+  font-size: 17px;
+}
+
+.form-container {
+  max-width: 850px;
+  margin: 20px auto 60px;
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.section-title {
+  font-size: 22px;
+  color: #238b45;
+  margin: 25px 0 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #238b45;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 7px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.submit-btn:hover {
+  background: #176c34;
+}
+
+.note {
+  background: #f1f8f2;
+  padding: 15px;
+  border-left: 4px solid #238b45;
+  margin-top: 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+footer {
+  background: #173b2a;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media(max-width:700px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 29px;
+  }
+
+  .form-container {
+    margin: 15px;
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <a href="index.html">
+    <img src="Logo.PNG" class="logo" alt="BhoomiSetu">
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html">Buy</a>
+    <a href="list-property.html">Sell</a>
+    <a href="index.html">Locations</a>
+    <a href="index.html">Contact</a>
+  </nav>
+
+  <a href="index.html" class="home-btn">Home</a>
+
+</header>
+
+<section class="hero">
+
+  <h1>List Your Property</h1>
+
+  <p>
+    Sell your land or property with BhoomiSetu
+  </p>
+
+</section>
+
+<div class="form-container">
+
+  <form>
+
+    <h2 class="section-title">Seller Details</h2>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" placeholder="Enter your name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mobile Number *</label>
+        <input type="tel" placeholder="Enter mobile number" required>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>WhatsApp Number</label>
+      <input type="tel" placeholder="Enter WhatsApp number">
+    </div>
+
+    <div class="form-group">
+      <label>Seller Type *</label>
+
+      <select required>
+        <option value="">Select seller type</option>
+        <option>Land Owner</option>
+        <option>Developer</option>
+        <option>Authorized Representative</option>
+        <option>Agent</option>
+      </select>
+
+    </div>
+
+
+    <h2 class="section-title">Property Details</h2>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>District *</label>
+        <input type="text" placeholder="Example: Rangareddy" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mandal *</label>
+        <input type="text" placeholder="Enter Mandal" required>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Village *</label>
+      <input type="text" placeholder="Enter Village" required>
+    </div>
+
+    <div class="form-group">
+      <label>Survey Number</label>
+      <input type="text" placeholder="Enter Survey Number">
+    </div>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>Property Type *</label>
+
+        <select required>
+          <option value="">Select property type</option>
+          <option>Agricultural Land</option>
+          <option>Farm Land</option>
+          <option>Residential Plot</option>
+          <option>Commercial Land</option>
+          <option>Development Land</option>
+          <option>House</option>
+          <option>Apartment</option>
+        </select>
+
+      </div>
+
+      <div class="form-group">
+        <label>Land Size *</label>
+        <input type="text" placeholder="Example: 2 Acres / 500 Sq.Yds" required>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>Expected Price *</label>
+        <input type="text" placeholder="Example: ₹80 Lakhs" required>
+      </div>
+
+      <div class="form-group">
+        <label>Road Access</label>
+
+        <select>
+          <option value="">Select</option>
+          <option>Yes - Main Road</option>
+          <option>Yes - Internal Road</option>
+          <option>No</option>
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <h2 class="section-title">Location & Property Information</h2>
+
+    <div class="form-group">
+      <label>Google Maps Location</label>
+      <input type="url" placeholder="Paste Google Maps link">
+    </div>
+
+    <div class="form-group">
+      <label>Property Description</label>
+
+      <textarea placeholder="Describe your property, road access, nearby landmarks, water availability, etc."></textarea>
+
+    </div>
+
+
+    <h2 class="section-title">Property Photos</h2>
+
+    <div class="form-group">
+      <label>Property Photo Link</label>
+      <input type="url" placeholder="Paste Google Drive / Photo link">
+    </div>
+
+    <div class="form-group">
+      <label>Property Video Link</label>
+      <input type="url" placeholder="Paste video link">
+    </div>
+
+
+    <div class="note">
+      By submitting this form, you agree that the information provided
+      is correct and may be used by BhoomiSetu for property marketing
+      and buyer enquiries. Property verification and legal review may
+      be required before any transaction.
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Submit Property
+    </button>
+
+  </form>
+
+</div>
+
+<footer>
+  © 2026 BhoomiSetu — A Brighter Tomorrow Together
+</footer>
+
+</body>
+</html>
