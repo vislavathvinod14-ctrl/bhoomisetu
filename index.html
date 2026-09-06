@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BhoomiSetu | Telangana Land & Property Marketplace</title>
+
+  <meta name="description"
+        content="Find land, plots, farm lands, houses, apartments and flats across Telangana with BhoomiSetu.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f7f8f5;
+      color: #173b2a;
+    }
+
+    header {
+      background: white;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e5e5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #176b3a;
+    }
+
+    .logo span {
+      color: #c99a32;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #173b2a;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 80px 6%;
+      text-align: center;
+      background: linear-gradient(135deg, #edf6ee, #fffaf0);
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      margin-bottom: 15px;
+      color: #145c32;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr) auto;
+      gap: 10px;
+    }
+
+    .search-box input,
+    .search-box select {
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 14px 22px;
+      background: #176b3a;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0e522b;
+    }
+
+    section {
+      padding: 60px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      color: #145c32;
+    }
+
+    .section-title p {
+      margin-top: 8px;
+      color: #666;
+    }
+
+    .categories,
+    .locations,
+    .properties {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .category-icon {
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      color: #176b3a;
+    }
+
+    .card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .property-image {
+      height: 160px;
+      background: #dfe9df;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      color: #c08c20;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .sell-section {
+      background: #176b3a;
+      color: white;
+      text-align: center;
+    }
+
+    .sell-section h2 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .sell-section p {
+      margin-bottom: 25px;
+    }
+
+    .gold-button {
+      background: #c99a32;
+    }
+
+    .how-it-works {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+      text-align: center;
+    }
+
+    .step {
+      background: white;
+      padding: 20px 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: #176b3a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #10291d;
+      color: white;
+      padding: 40px 6%;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 8px;
+      color: #cdd8d1;
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      .categories,
+      .locations,
+      .properties {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .how-it-works {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 45px 5%;
+      }
+
+      .categories,
+      .locations,
+      .properties,
+      .how-it-works {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    Bhoomi<span>Setu</span>
+  </div>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Buy</a>
+    <a href="#">Sell</a>
+    <a href="#">Locations</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <button onclick="alert('Seller registration coming next!')">
+    List Property
+  </button>
+</header>
+
+<section class="hero">
+
+  <h1>Find the Right Land & Property in Telangana</h1>
+
+  <p>
+    Land • Plots • Farm Land • Houses • Apartments • Flats
+  </p>
+
+  <div class="search-box">
+
+    <input type="text" placeholder="Enter location">
+
+    <select>
+      <option>Property Type</option>
+      <option>Agricultural Land</option>
+      <option>Farm Land</option>
+      <option>Residential Plot</option>
+      <option>Commercial Land</option>
+      <option>House</option>
+      <option>Apartment</option>
+      <option>Flat</option>
+    </select>
+
+    <select>
+      <option>Budget</option>
+      <option>Under ₹10 Lakhs</option>
+      <option>₹10–25 Lakhs</option>
+      <option>₹25–50 Lakhs</option>
+      <option>₹50 Lakhs–₹1 Crore</option>
+      <option>₹1 Crore+</option>
+    </select>
+
+    <input type="text" placeholder="Size">
+
+    <button onclick="alert('Property search will be connected next!')">
+      Search
+    </button>
+
+  </div>
+
+</section>
+
+<section>
+
+  <div class="section-title">
+    <h2>Explore Properties</h2>
+    <p>Find the property that matches your needs.</p>
+  </div>
+
+  <div class="categories">
+
+    <div class="card">
+      <div class="category-icon">🌾</div>
+      <h3>Agricultural Land</h3>
+      <p>Farmland and agricultural properties.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🌳</div>
+      <h3>Farm Land</h3>
+      <p>Farm land and farmhouse opportunities.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">📐</div>
+      <h3>Residential Plots</h3>
+      <p>Plots for your dream home.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🏢</div>
+      <h3>Commercial Land</h3>
+      <p>Land for business and investment.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🏠</div>
+      <h3>Independent Houses</h3>
+      <p>Find houses across Telangana.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🏙️</div>
+      <h3>Apartments</h3>
+      <p>Modern apartments and communities.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🏘️</div>
+      <h3>Flats</h3>
+      <p>New and resale flats.</p>
+    </div>
+
+    <div class="card">
+      <div class="category-icon">🏗️</div>
+      <h3>New Projects</h3>
+      <p>Explore upcoming property projects.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section>
+
+  <div class="section-title">
+    <h2>Featured Properties</h2>
+    <p>Demo listings — real properties will be added later.</p>
+  </div>
+
+  <div class="properties">
+
+    <div class="card">
+      <div class="property-image">🌾</div>
+      <h3>Agricultural Land</h3>
+      <p>📍 Kadthal, Telangana</p>
+      <p>Extent: 2 Acres</p>
+      <div class="price">₹80 Lakhs</div>
+      <button>View Property</button>
+    </div>
+
+    <div class="card">
+      <div class="property-image">📐</div>
+      <h3>Residential Plot</h3>
+      <p>📍 Maheshwaram</p>
+      <p>Extent: 200 Sq. Yards</p>
+      <div class="price">₹35 Lakhs</div>
+      <button>View Property</button>
+    </div>
+
+    <div class="card">
+      <div class="property-image">🏠</div>
+      <h3>Independent House</h3>
+      <p>📍 Shadnagar</p>
+      <p>3 BHK House</p>
+      <div class="price">₹65 Lakhs</div>
+      <button>View Property</button>
+    </div>
+
+    <div class="card">
+      <div class="property-image">🏢</div>
+      <h3>Apartment</h3>
+      <p>📍 Hyderabad</p>
+      <p>2 BHK Apartment</p>
+      <div class="price">₹75 Lakhs</div>
+      <button>View Property</button>
+    </div>
+
+  </div>
+
+</section>
+
+<section>
+
+  <div class="section-title">
+    <h2>Popular Locations</h2>
+    <p>Explore properties across Telangana.</p>
+  </div>
+
+  <div class="locations">
+
+    <div class="card"><h3>Hyderabad</h3></div>
+    <div class="card"><h3>Ranga Reddy</h3></div>
+    <div class="card"><h3>Kadthal</h3></div>
+    <div class="card"><h3>Maheshwaram</h3></div>
+    <div class="card"><h3>Thukkuguda</h3></div>
+    <div class="card"><h3>Shadnagar</h3></div>
+    <div class="card"><h3>Chevella</h3></div>
+    <div class="card"><h3>Vikarabad</h3></div>
+
+  </div>
+
+</section>
+
+<section class="sell-section">
+
+  <h2>Want to Sell Your Property?</h2>
+
+  <p>
+    List your land, plot, house or apartment on BhoomiSetu.
+  </p>
+
+  <button class="gold-button"
+          onclick="alert('Seller listing form will be added next!')">
+    List Your Property
+  </button>
+
+</section>
+
+<section>
+
+  <div class="section-title">
+    <h2>How BhoomiSetu Works</h2>
+  </div>
+
+  <div class="how-it-works">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>List</h3>
+      <p>Seller lists property.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Review</h3>
+      <p>Information is reviewed.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Enquire</h3>
+      <p>Buyer sends enquiry.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Visit</h3>
+      <p>Schedule a site visit.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <h3>Negotiate</h3>
+      <p>Buyer and seller negotiate.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <h3>Complete</h3>
+      <p>Transaction is completed.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+
+  <h2>BhoomiSetu</h2>
+
+  <p>A Brighter Tomorrow Together</p>
+
+  <p>Telangana Land & Property Marketplace</p>
+
+  <p>© 2026 BhoomiSetu. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>
