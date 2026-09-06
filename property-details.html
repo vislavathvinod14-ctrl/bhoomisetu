@@ -857,6 +857,14 @@ function openSiteVisitForm(){
         });
     }
 }    
+
+window.addEventListener("load", function(){
+
+    if(window.location.hash === "#siteVisitForm"){
+        openSiteVisitForm();
+    }
+
+});
     
 </script>
 <div id="siteVisitForm" class="site-visit-form">
