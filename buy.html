@@ -248,6 +248,86 @@ button{
     line-height:1.5;
 }
 
+/* BUYER ENQUIRY */
+
+.enquire-button{
+    grid-column:1 / -1;
+    background:#145a32;
+    color:white;
+    border:0;
+    cursor:pointer;
+}
+
+.enquiry-modal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.enquiry-box{
+    background:white;
+    width:100%;
+    max-width:500px;
+    border-radius:15px;
+    padding:25px;
+    position:relative;
+}
+
+.enquiry-box h2{
+    margin-top:0;
+    color:#145a32;
+}
+
+.enquiry-box label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.enquiry-box input,
+.enquiry-box textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.enquiry-box textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.close-enquiry{
+    position:absolute;
+    right:15px;
+    top:10px;
+    font-size:28px;
+    cursor:pointer;
+    color:#666;
+}
+
+.submit-enquiry{
+    width:100%;
+    margin-top:18px;
+    background:#d4a72c;
+    color:white;
+}
+
+.enquiry-status{
+    margin-top:12px;
+    text-align:center;
+    font-weight:bold;
+}
 .loading,
 .empty,
 .error{
@@ -375,7 +455,74 @@ footer{
     </div>
 
 </div>
+<!-- BUYER ENQUIRY POPUP -->
 
+<div id="enquiryModal" class="enquiry-modal">
+
+    <div class="enquiry-box">
+
+        <span class="close-enquiry" onclick="closeEnquiry()">
+            ×
+        </span>
+
+        <h2>📩 Property Enquiry</h2>
+
+        <p id="enquiryPropertyText">
+            Property ID:
+        </p>
+
+        <form id="enquiryForm">
+
+            <label>Your Name</label>
+
+            <input
+                type="text"
+                id="buyerName"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>Mobile Number</label>
+
+            <input
+                type="tel"
+                id="buyerMobile"
+                placeholder="Enter mobile number"
+                required
+            >
+
+            <label>WhatsApp Number</label>
+
+            <input
+                type="tel"
+                id="buyerWhatsapp"
+                placeholder="Enter WhatsApp number"
+            >
+
+            <label>Message</label>
+
+            <textarea
+                id="buyerMessage"
+                placeholder="I am interested in this property..."
+            ></textarea>
+
+            <button
+                type="submit"
+                class="submit-enquiry"
+            >
+                📩 Submit Enquiry
+            </button>
+
+            <div
+                id="enquiryStatus"
+                class="enquiry-status"
+            ></div>
+
+        </form>
+
+    </div>
+
+</div>
 <footer>
 
     <h3>BhoomiSetu</h3>
@@ -409,7 +556,111 @@ let allProperties = [];
 
 
 /* LOAD APPROVED PROPERTIES */
+/* BUYER ENQUIRY */
 
+let selectedPropertyId = null;
+
+function openEnquiry(propertyId){
+
+    selectedPropertyId = propertyId;
+
+    document.getElementById("enquiryPropertyText").innerText =
+        "Property ID: " + propertyId;
+
+    document.getElementById("enquiryModal").style.display =
+        "flex";
+
+    document.getElementById("enquiryStatus").innerText = "";
+
+    document.getElementById("enquiryForm").reset();
+}
+
+
+function closeEnquiry(){
+
+    document.getElementById("enquiryModal").style.display =
+        "none";
+
+    selectedPropertyId = null;
+}
+
+
+document.getElementById("enquiryForm")
+.addEventListener("submit", async function(event){
+
+    event.preventDefault();
+
+    const buyerName =
+        document.getElementById("buyerName").value.trim();
+
+    const buyerMobile =
+        document.getElementById("buyerMobile").value.trim();
+
+    const buyerWhatsapp =
+        document.getElementById("buyerWhatsapp").value.trim();
+
+    const buyerMessage =
+        document.getElementById("buyerMessage").value.trim();
+
+    const status =
+        document.getElementById("enquiryStatus");
+
+    if(!selectedPropertyId){
+
+        status.innerText =
+            "Property ID missing.";
+
+        return;
+    }
+
+    status.innerText =
+        "Submitting enquiry...";
+
+
+    const { error } =
+        await supabaseClient
+        .from("buyer_enquiries")
+        .insert([{
+
+            property_id: selectedPropertyId,
+
+            buyer_name: buyerName,
+
+            mobile: buyerMobile,
+
+            whatsapp: buyerWhatsapp,
+
+            message: buyerMessage,
+
+            status: "new"
+
+        }]);
+
+
+    if(error){
+
+        console.error(error);
+
+        status.innerText =
+            "Unable to submit enquiry. Please try again.";
+
+        return;
+    }
+
+
+    status.innerText =
+        "✅ Enquiry submitted successfully!";
+
+    document.getElementById("enquiryForm").reset();
+
+
+    setTimeout(function(){
+
+        closeEnquiry();
+
+    }, 1800);
+
+});
 async function loadProperties(){
 
     const container =
@@ -630,6 +881,12 @@ function displayProperties(properties){
     >
         🔎 View Full Details
     </a>
+   <button
+    class="enquire-button"
+    onclick="openEnquiry(${property.id})"
+>
+    📩 Enquire Now
+</button>
 
     ${mapButton}
 
