@@ -220,6 +220,12 @@ button{
     font-weight:bold;
 }
 
+.details-button{
+    grid-column:1 / -1;
+    background:#145a32;
+    color:white;
+}
+
 .maps{
     background:#e8f3ea;
     color:#145a32;
@@ -616,33 +622,40 @@ function displayProperties(properties){
                 :
                 ""
             }
+        <div class="actions">
 
-            <div class="actions">
+    <a
+        class="details-button"
+        href="property-details.html?id=${encodeURIComponent(property.id)}"
+    >
+        🔎 View Full Details
+    </a>
 
-                ${mapButton}
+    ${mapButton}
 
-                <a
-                    class="whatsapp"
-                    href="https://wa.me/919391569352?text=${whatsappMessage}"
-                    target="_blank"
-                >
-                    💬 WhatsApp
-                </a>
+    <a
+        class="whatsapp"
+        href="https://wa.me/919391569352?text=${whatsappMessage}"
+        target="_blank"
+    >
+        💬 WhatsApp
+    </a>
 
-                <a
-                    class="sitevisit"
-                    href="https://wa.me/919391569352?text=${encodeURIComponent(
-                        "Hi BhoomiSetu, I want to schedule a site visit for Property ID: " +
-                        property.id
-                    )}"
-                    target="_blank"
-                >
-                    📅 Schedule Site Visit
-                </a>
+    <a
+        class="sitevisit"
+        href="https://wa.me/919391569352?text=${encodeURIComponent(
+            "Hi BhoomiSetu, I want to schedule a site visit for Property ID: " +
+            property.id
+        )}"
+        target="_blank"
+    >
+        📅 Schedule Site Visit
+    </a>
 
-                ${videoButton}
+    ${videoButton}
 
-            </div>
+</div>
+            
 
         </div>
         `;
