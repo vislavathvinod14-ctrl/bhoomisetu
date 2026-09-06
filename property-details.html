@@ -272,6 +272,46 @@ footer{
         grid-column:auto;
     }
 }
+
+    .site-visit-form{
+    display:none;
+    margin-top:25px;
+    padding:22px;
+    background:#f5f8f5;
+    border-radius:12px;
+}
+
+.site-visit-form h2{
+    margin-top:0;
+    color:#145a32;
+}
+
+.site-visit-form input,
+.site-visit-form textarea{
+    width:100%;
+    padding:13px;
+    margin:7px 0 14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.visit-submit{
+    width:100%;
+    background:#145a32;
+    color:white;
+    border:0;
+    padding:14px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.visit-message{
+    margin-top:15px;
+    font-weight:bold;
+}
+    
 </style>
 </head>
 
@@ -662,15 +702,15 @@ function displayProperty(property){
                 >
                     💬 Enquire on WhatsApp
                 </a>
+            <a
+    class="sitevisit"
+    href="javascript:void(0)"
+    onclick="openSiteVisitForm()"
+>
+    📅 Schedule Site Visit
+</a>
 
-
-                <a
-                    class="sitevisit"
-                    href="https://wa.me/919391569352?text=${siteVisitMessage}"
-                    target="_blank"
-                >
-                    📅 Schedule Site Visit
-                </a>
+                
 
             </div>
 
@@ -729,7 +769,147 @@ function changeMainImage(photo){
 
 loadProperty();
 
-</script>
+async function submitSiteVisit(){
 
+    const buyerName =
+        document.getElementById("visitBuyerName").value.trim();
+
+    const mobile =
+        document.getElementById("visitMobile").value.trim();
+
+    const whatsapp =
+        document.getElementById("visitWhatsapp").value.trim();
+
+    const visitDate =
+        document.getElementById("visitDate").value;
+
+    const visitTime =
+        document.getElementById("visitTime").value;
+
+    const notes =
+        document.getElementById("visitNotes").value.trim();
+
+    const message =
+        document.getElementById("visitMessage");
+
+    if(!buyerName || !mobile || !visitDate || !visitTime){
+
+        message.innerText =
+            "Please fill all required fields.";
+
+        return;
+    }
+
+    const propertyId =
+        new URLSearchParams(window.location.search).get("id");
+
+    message.innerText =
+        "Submitting your site visit...";
+
+    const { error } =
+        await supabaseClient
+        .from("site_visits")
+        .insert([{
+
+            property_id: propertyId,
+            buyer_name: buyerName,
+            mobile: mobile,
+            whatsapp: whatsapp,
+            visit_date: visitDate,
+            visit_time: visitTime,
+            status: "scheduled",
+            notes: notes
+
+        }]);
+
+    if(error){
+
+        console.error(error);
+
+        message.innerText =
+            "Unable to schedule site visit. Please try again.";
+
+        return;
+    }
+
+    message.innerText =
+        "✅ Site visit scheduled successfully!";
+
+    document.getElementById("visitBuyerName").value = "";
+    document.getElementById("visitMobile").value = "";
+    document.getElementById("visitWhatsapp").value = "";
+    document.getElementById("visitDate").value = "";
+    document.getElementById("visitTime").value = "";
+    document.getElementById("visitNotes").value = "";
+} 
+
+function openSiteVisitForm(){
+
+    const form =
+        document.getElementById("siteVisitForm");
+
+    if(form){
+        form.style.display = "block";
+
+        form.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}    
+    
+</script>
+<div id="siteVisitForm" class="site-visit-form">
+
+    <h2>📅 Schedule Site Visit</h2>
+
+    <input
+        type="text"
+        id="visitBuyerName"
+        placeholder="Your Name"
+        required
+    >
+
+    <input
+        type="tel"
+        id="visitMobile"
+        placeholder="Mobile Number"
+        required
+    >
+
+    <input
+        type="tel"
+        id="visitWhatsapp"
+        placeholder="WhatsApp Number"
+    >
+
+    <input
+        type="date"
+        id="visitDate"
+        required
+    >
+
+    <input
+        type="time"
+        id="visitTime"
+        required
+    >
+
+    <textarea
+        id="visitNotes"
+        rows="3"
+        placeholder="Any message or requirement"
+    ></textarea>
+
+    <button
+        class="visit-submit"
+        onclick="submitSiteVisit()"
+    >
+        Confirm Site Visit
+    </button>
+
+    <div id="visitMessage" class="visit-message"></div>
+
+</div>
 </body>
 </html>
